@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Profile page for the logged-in user to view and edit their personal information.
+// This page will allow the user to update details like name, email, and password.
 import React from "react";
 
 export default function ExampleComponent() {
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-

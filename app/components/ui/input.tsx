@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Input component for reusable input fields throughout the app.
+// This should handle different types of input fields such as text, email, password, etc.
 import React from "react";
 
 export default function ExampleComponent() {
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-

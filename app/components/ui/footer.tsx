@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Footer component to provide a bottom section with useful links and information.
+// This component could display contact info, legal disclaimers, and social media links.
 import React from "react";
 
 export default function ExampleComponent() {
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-

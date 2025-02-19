@@ -1,3 +1,5 @@
+// Layout component to wrap around your pages.
+// This component should provide a common layout (e.g., header, footer) for your pages.
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";

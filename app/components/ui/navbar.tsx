@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Navbar component to provide a top navigation bar for the website.
+// This component will display links for navigation across the website.
 import React from "react";
 
 export default function ExampleComponent() {
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-

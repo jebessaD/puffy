@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Button component to provide reusable UI elements for buttons throughout the app.
+// This should be a customizable component for buttons with text or icons.
 import React from "react";
 
 export default function ExampleComponent() {
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-
