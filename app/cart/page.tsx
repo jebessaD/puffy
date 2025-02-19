@@ -1,7 +1,7 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
 import React from "react";
 
+// Cart page for the user to view and manage items in the shopping cart.
+// This page will show the products added to the cart and allow modification.
 export default function ExampleComponent() {
   return (
     <div>
@@ -10,4 +10,3 @@ export default function ExampleComponent() {
     </div>
   );
 }
-

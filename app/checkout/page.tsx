@@ -1,5 +1,6 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Checkout page for the user to proceed with payment.
+// This page should gather shipping and payment details from the user.
+
 import React from "react";
 
 export default function ExampleComponent() {

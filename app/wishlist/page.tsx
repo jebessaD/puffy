@@ -1,5 +1,5 @@
-// Page for displaying all available products in your eCommerce store.
-// This page will list all products, possibly with filters and sorting options.
+// Wishlist page for the user to view products they have saved for later.
+// This page will display items added to the user's wishlist.
 import React from "react";
 
 export default function ExampleComponent() {
