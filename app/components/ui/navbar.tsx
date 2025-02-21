@@ -2,11 +2,11 @@
 // This component will display links for navigation across the website.
 import React from "react";
 
-export default function ExampleComponent() {
+export default function MRConflict() {
   return (
     <div>
       <h1>Example Component</h1>
-      <p>This is a simple example component.</p>
+      <p>COnfilict page.</p>
     </div>
   );
 }
