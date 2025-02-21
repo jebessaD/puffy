@@ -63,7 +63,7 @@ export default function Navbar() {
         </li>
       </ul>
       </div>
-      <div className="max-md:hidden text-2xl font-medium arsenal-sc-bold">THE PUFFY</div>
+      <div className="max-md:hidden text-2xl font-medium arsenal-sc-bold">PUFFY</div>
       <div className="flex gap-2 sm:max-lg:gap-4 lg:gap-6">
       <GoMail className="text-2xl sm:text-3xl cursor-pointer" />
       <BiLogoInstagram className="text-2xl sm:text-3xl cursor-pointer" />
