@@ -47,9 +47,15 @@ export default function Navbar() {
           </div>
           <hr className="-mx-6" />
           <div className="-mx-6 flex justify-around">
+            <a href="mailto:OyH5o@example.com" target="_blank">
             <GoMail size={25} />
+            </a>
+            <a href="https://www.instagram.com/puffyboutique/" target="_blank">
             <BiLogoInstagram size={25} />
+            </a>
+            <Link href="/account">
             <GoPerson size={25} />
+            </Link>
           </div>
         </SheetContent>
       </Sheet>
@@ -71,10 +77,18 @@ export default function Navbar() {
       <Image src="/image/PuffyLogo.png" alt="Puffy Logo" className="sm:hidden -my-3" width={80} height={80} />
       </div>
       <div className="basis-1/3 flex justify-end gap-2 sm:max-lg:gap-4 lg:gap-6">
-      <GoMail className="hover:scale-125 transition duration-500 max-sm:hidden text-3xl cursor-pointer" />
-      <BiLogoInstagram className="hover:scale-125 transition duration-500 max-sm:hidden text-3xl cursor-pointer" />
-      <GoPerson className="hover:scale-125 transition duration-500 max-sm:hidden sm:text-3xl cursor-pointer" />
-      <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 max-sm:hidden sm:text-3xl cursor-pointer" />
+      <a href="mailto:OyH5o@example.com" target="_blank">
+      <GoMail className="hover:scale-125 transition duration-500 max-sm:hidden text-3xl" />
+      </a>
+      <a href="https://www.instagram.com/puffyboutique/" target="_blank">
+      <BiLogoInstagram className="hover:scale-125 transition duration-500 max-sm:hidden text-3xl" />
+      </a>
+      <Link href="/account">
+      <GoPerson className="hover:scale-125 transition duration-500 max-sm:hidden sm:text-3xl" />
+      </Link>
+      <Link href="/cart">
+      <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 max-sm:hidden sm:text-3xl" />
+      </Link>
       {/* <GoMail className="text-2xl sm:text-3xl cursor-pointer" /> */}
       </div>
     </div>
