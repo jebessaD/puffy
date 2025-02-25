@@ -1,7 +1,10 @@
+import Navbar from "./components/ui/navbar";
+
 export default function Home() {
   return (
     <div>
-      Home
+      <Navbar />
+      <div className="w-full h-8 bg-black"></div>
     </div>
   );
 }
