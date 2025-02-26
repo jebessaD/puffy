@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -66,30 +66,6 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.arsenal-sc-regular {
-  font-family: "Arsenal SC", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.arsenal-sc-bold {
-  font-family: "Arsenal SC", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.arsenal-sc-regular-italic {
-  font-family: "Arsenal SC", serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.arsenal-sc-bold-italic {
-  font-family: "Arsenal SC", serif;
-  font-weight: 700;
-  font-style: italic;
 }
 
 
