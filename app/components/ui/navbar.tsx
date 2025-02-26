@@ -86,7 +86,7 @@ export default function Navbar() {
       </div>
       <div className="basis-1/3 flex  justify-end sm:justify-center items-center text-2xl font-medium ">
         <Image
-          src="/image/PuffyLogo.png"
+          src="/image/puffy_logo.png"
           alt="Puffy Logo"
           className=""
           width={70}
