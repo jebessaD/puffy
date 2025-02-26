@@ -68,11 +68,11 @@ export default function Navbar() {
           </Sheet>
         </div>
 
-        <ul className="max-sm:hidden h-8 overflow-clip flex justify-center space-x-4 lg:space-x-7 text-xl font-light">
+        <ul className="max-sm:hidden h-6 overflow-clip flex justify-center space-x-4 lg:space-x-7  ">
           {navbarMenu.map((item, index) => (
             <li
               key={index}
-              className="z-10 hover:-translate-y-[29px] transition duration-500"
+              className="z-10 hover:-translate-y-[26px] transition duration-500"
             >
               <Link href={item.href} className="text-nowrap block">
                 {item.name}
@@ -86,7 +86,7 @@ export default function Navbar() {
       </div>
       <div className="basis-1/3 flex  justify-end sm:justify-center items-center text-2xl font-medium ">
         <Image
-          src="/image/PuffyLogo.png"
+          src="/image/puffy_logo.png"
           alt="Puffy Logo"
           className=""
           width={70}
