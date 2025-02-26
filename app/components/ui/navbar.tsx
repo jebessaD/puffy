@@ -29,7 +29,7 @@ export default function Navbar() {
             <SheetContent className="flex flex-col" side={"left"}>
               <SheetTitle className="-mx-3">
                 <Image
-                  src="/image/PuffyLogo.png"
+                  src="/image/puffylogo.png"
                   alt="Puffy Logo"
                   className="sm:hidden -ml-6 -mt-8"
                   width={60}
