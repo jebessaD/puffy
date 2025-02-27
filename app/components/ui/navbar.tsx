@@ -3,10 +3,10 @@ import Image from "next/image";
 import { GoMail } from "react-icons/go";
 import { BiLogoInstagram } from "react-icons/bi";
 import { GoPerson } from "react-icons/go";
-import { LiaShoppingBagSolid } from "react-icons/lia";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosArrowForward } from "react-icons/io";
 import { navbarMenu } from "@/app/lib/data";
+import Cart from "@/app/components/ui/cart";
 
 import {
   Sheet,
@@ -103,10 +103,7 @@ export default function Navbar() {
         <Link href="/account">
           <GoPerson size={26} className={`${hoverEffect}`} />
         </Link>
-        <Link href="/cart">
-          <LiaShoppingBagSolid size={26} className={`${hoverEffect}`} />
-        </Link>
-        {/* <GoMail className="text-2xl sm:text-3xl cursor-pointer" /> */}
+        <Cart />
       </div>
     </div>
   );
