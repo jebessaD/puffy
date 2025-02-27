@@ -22,7 +22,7 @@ export default function Cart() {
         <SheetHeader>
           <SheetTitle className="text-center">Shopping Cart</SheetTitle>
           <SheetDescription className="text-center">
-            Click Add to Cart when you're done.
+            Click Add to Cart when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
         <SheetFooter className="justify-center">
