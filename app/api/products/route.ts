@@ -1,7 +1,6 @@
-import { PrismaClient, Product } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -15,21 +14,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const product: Product = await prisma.product.create({ data });
+    const product = await prisma.product.create({ data });
     return NextResponse.json(product, { status: 201 });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+  } catch (error) {
     return NextResponse.json(
-      { error: "Unknown error occurred" },
+      { error: error instanceof Error ? error.message : "Unknown error occurred" },
       { status: 500 }
     );
   }
 }
-
-
-
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
@@ -62,12 +55,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const totalPages = Math.ceil(totalProducts / pageSize);
 
     return NextResponse.json({ products, totalPages }, { status: 200 });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+  } catch (error) {
     return NextResponse.json(
-      { error: "Unknown error occurred" },
+      { error: error instanceof Error ? error.message : "Unknown error occurred" },
       { status: 500 }
     );
   }
