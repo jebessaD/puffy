@@ -1,40 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model Product {
-  id               Int       @id @default(autoincrement())
+  id               Int         @id @default(autoincrement())
   name             String
   description      String
   price            Float
-  discount         Float?    // Optional discount
+  discount         Float?
   stockQuantity    Int
   category         String
-  color            String?  // Optional
-  size             String?  // Optional
-  mainImage        String   // Required
-  additionalImages String[] // Optional, list of URLs
-  averageRating    Float    @default(0)
-  numReviews       Int      @default(0)
-  reviews          Review[]
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
+  color            String?
+  size             String?
+  mainImage        String
+  additionalImages String[]
+  averageRating    Float       @default(0)
+  numReviews       Int         @default(0)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   orderItems       OrderItem[]
+  reviews          Review[]
 }
 
 model Review {
   id        Int      @id @default(autoincrement())
-  rating    Int      // Rating from 1 to 5
+  rating    Int
   comment   String
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model ShippingAddress {
@@ -47,22 +46,20 @@ model ShippingAddress {
   state      String?
   country    String
   postalCode String
-
   orders     Order[]
 }
 
 model Order {
-  id              Int       @id @default(autoincrement())
+  id                Int             @id @default(autoincrement())
   shippingAddressId String
+  totalAmount       Float
+  paymentStatus     PaymentStatus   @default(PENDING)
+  orderStatus       OrderStatus     @default(PENDING)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
   shippingAddress   ShippingAddress @relation(fields: [shippingAddressId], references: [id])
-  totalAmount      Float
-  paymentStatus    PaymentStatus @default(PENDING) // "PENDING", "PAID", etc.
-  orderStatus      OrderStatus   @default(PENDING) // "PENDING", "SHIPPED", etc.
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-
-  orderItems       OrderItem[]
-  payment          Payment?
+  orderItems        OrderItem[]
+  payment           Payment?
 }
 
 model OrderItem {
@@ -71,8 +68,8 @@ model OrderItem {
   productId Int
   quantity  Int
   price     Float
-  order     Order    @relation(fields: [orderId], references: [id])
-  product   Product  @relation(fields: [productId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
 
 model Discount {
@@ -85,12 +82,12 @@ model Discount {
 }
 
 model Payment {
-  id         Int      @id @default(autoincrement())
-  orderId    Int      @unique
-  status     PaymentStatus
-  paymentDate DateTime @default(now())
-  amount     Float
-  order      Order  @relation(fields: [orderId], references: [id])
+  id          Int           @id @default(autoincrement())
+  orderId     Int           @unique
+  status      PaymentStatus
+  paymentDate DateTime      @default(now())
+  amount      Float
+  order       Order         @relation(fields: [orderId], references: [id])
 }
 
 enum OrderStatus {
