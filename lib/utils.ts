@@ -1,10 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-export type * from "@prisma/client";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
