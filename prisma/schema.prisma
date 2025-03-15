@@ -15,8 +15,8 @@ model Product {
   discount         Float?
   stockQuantity    Int
   category         String
-  color            String?
-  size             String?
+  color            String[]
+  size             String[]
   mainImage        String
   additionalImages String[]
   averageRating    Float       @default(0)
