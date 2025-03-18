@@ -1,23 +1,18 @@
 "use client";
 
-import {
-  useForm,
-  Controller,
-  SubmitHandler,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import ProductInfoSection from "@/app/components/ProductInfoSection";
 import ProductOptionsSection from "@/app/components/ProductOptionsSection";
 import ProductImagesSection from "@/app/components/ProductImagesSection";
 import { Button } from "@/components/ui/button";
-import { FormValues } from "@/app/lib/data.type";
-import { fetcher, post } from "@/app/lib/fetcher";
-import useSWR from "swr";
-import { DevTool } from '@hookform/devtools';
+import { DevTool } from "@hookform/devtools";
+import useProducts from "@/app/hooks/useProducts";
+import { productSchema, ProductFormValues } from "@/app/lib/schema";
+import { useToast } from "../../../components/ui/use-toast";
 
 const ProductForm = () => {
+  const { toast } = useToast();
   const {
     control,
     handleSubmit,
@@ -25,8 +20,11 @@ const ProductForm = () => {
     register,
     setValue,
     watch,
-    trigger
-  } = useForm<FormValues>({
+    trigger,
+    reset,
+  } = useForm<ProductFormValues>({
+    resolver: zodResolver(productSchema),
+    mode: "onChange",
     defaultValues: {
       name: "",
       description: "",
@@ -38,17 +36,25 @@ const ProductForm = () => {
     },
   });
 
-  const { data, error, mutate } = useSWR("/api/products", fetcher);
+  const { mutate, createProduct } = useProducts();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const formattedData = {
-      ...data,
-      price: parseFloat(data.price.toString()), // ensure float
-      discount: parseFloat(data.discount.toString()), // ensure float
-      stockQuantity: parseInt(data.stockQuantity.toString(), 10), // ensure int
-    };
-    await post("/api/products", formattedData);
-    mutate(); // Refresh data
+  const onSubmit: SubmitHandler<ProductFormValues> = async (data) => {
+    try {
+      await createProduct(data);
+      toast({
+        title: "Success!",
+        description: "Product has been created successfully.",
+        variant: "default",
+      });
+      reset();
+      mutate();
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to create product. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -73,7 +79,11 @@ const ProductForm = () => {
           errors={errors}
           register={register}
         />
-        <Button type="submit" disabled={isSubmitting} className="py-5 w-full">
+        <Button
+          type="submit"
+          disabled={isSubmitting || Object.keys(errors).length > 0}
+          className="py-5 w-full"
+        >
           {isSubmitting ? "Creating..." : "Create Product"}
         </Button>
       </div>

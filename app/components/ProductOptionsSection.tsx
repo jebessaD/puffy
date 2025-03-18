@@ -82,7 +82,7 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
     <div className="flex flex-col gap-2">
       {/* Color Array */}
       <div>
-        <label className={labelCSS}>Colors</label>
+        <label className={labelCSS}>Colors (optional)</label>
         <div className={inputContent}>
           <input
             value={colorInput}
@@ -114,7 +114,7 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
 
       {/* Size Array */}
       <div>
-        <label className={labelCSS}>Sizes</label>
+        <label className={labelCSS}>Sizes (optional)</label>
         <div className={inputContent}>
           <input
             value={sizeInput}
