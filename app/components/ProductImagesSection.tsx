@@ -83,7 +83,7 @@ const ProductImagesSection: React.FC<ProductImagesSectionProps> = ({
             Add
           </Button>
         </div>
-        <ErrorMessage errors={errors} fieldName="color" />
+        <ErrorMessage errors={errors} fieldName="additionalImages" />
 
         <div className="flex flex-col gap-1 mt-2">
           {additionalImages.map((img, index) => (
