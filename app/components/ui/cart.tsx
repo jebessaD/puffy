@@ -32,7 +32,7 @@ export default function Cart() {
           )}
         </div>
       </SheetTrigger>
-      <SheetContent className="max-sm:px-3 max-sm:w-full flex flex-col justify-between">
+      <SheetContent className="max-sm:px-3 text-gray-800  max-sm:w-full flex flex-col justify-between">
         <SheetHeader>
           <SheetTitle className="text-center">Shopping Cart</SheetTitle>
           <SheetDescription className="text-center">

@@ -2,9 +2,9 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ProductInfoSection from "@/app/components/ProductInfoSection";
-import ProductOptionsSection from "@/app/components/ProductOptionsSection";
-import ProductImagesSection from "@/app/components/ProductImagesSection";
+import ProductInfoSection from "@/app/admin/product/ProductInfoSection";
+import ProductOptionsSection from "@/app/admin/product/ProductOptionsSection";
+import ProductImagesSection from "@/app/admin/product/ProductImagesSection";
 import { Button } from "@/components/ui/button";
 import { DevTool } from "@hookform/devtools";
 import useProducts from "@/app/hooks/useProducts";

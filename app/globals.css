@@ -1,8 +1,18 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.fancy-font {
+  /* font-family: 'Playfair Display', serif; */
+  font-family: "Advent Pro", sans-serif;
+  font-optical-sizing: auto;
+
+}
+
 
 @layer base {
   :root {
