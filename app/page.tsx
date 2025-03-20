@@ -1,62 +1,72 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import useProducts from './hooks/useProducts';
-import ProductCard from './components/ProductCard';
-import ProductFilters from './components/ProductFilters';
-import Loading from './components/ui/loading';
-import { ProductFilters as ProductFiltersType, Product } from './lib/types';
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { PiQuotesDuotone } from "react-icons/pi";
 
-export default function Home() {
-  const [filters, setFilters] = useState<ProductFiltersType>({});
-  const { products = [], isLoading, isError } = useProducts(filters);
-
-  if (isError) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-600">Error loading products</h2>
-          <p className="mt-2 text-gray-600">Please try again later</p>
-        </div>
-      </div>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      {/* Hero Section */}
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-900">Our Products</h1>
-        <p className="mt-2 text-gray-600">Discover our collection of premium items</p>
-      </div>
+    <div>
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="relative h-[35rem] w-full overflow-hidden"
+      >
+        {/* Background Image */}
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/image/image3.jpg"
+            alt="Luxury shopping scene"
+            layout="fill"
+            objectFit="cover"
+            className="brightness-50"
+            priority
+          />
+        </div>
 
-      {/* Filters Section */}
-      <div className="my-12 rounded-lg bg-white ">
-        <ProductFilters onFilterChange={setFilters} />
-      </div>
-
-      {/* Product Grid */}
-      <div>
-        {isLoading ? (
-          <>
-            <Loading />
-            <p className='text-center text-gray-600 mt-2'>Loading products...</p>
-          </>
-        ) : products.length === 0 ? (
-          <div className="flex min-h-[400px] items-center justify-center">
-            <div className="text-center">
-              <h3 className="text-xl font-semibold text-gray-900">No products found</h3>
-              <p className="mt-2 text-gray-600">Try adjusting your filters</p>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
-      </div>
-    </main>
+        {/* Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+          className="flex flex-col items-center justify-center h-full text-center px-6"
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            className="text-6xl fancy-font md:text-8xl font-extrabold text-white fancy-font tracking-wide"
+          >
+            Puffy
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+            className="text-lg flex md:text-2xl items-start text-gray-300 mt-4 max-w-2xl"
+          >
+            <p className="self-end"> Luxury redefined - Indulge in softness and style </p>{" "}
+            <span>
+              <PiQuotesDuotone className="mx-4 text-gray-200 text-xl md:text-3xl lg:text-5xl"  />
+            </span>
+          </motion.div>
+          <Link href="/shop" passHref>
+            <motion.button
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-8 px-8 py-3 text-lg font-medium text-white border-2 border-black bg-black hover:bg-neutral-50 hover:text-black rounded-full shadow-lg transition-all"
+            >
+              Shop Now
+            </motion.button>
+          </Link>
+        </motion.div>
+      </motion.div>
+      <div className="h-96 flex justify-center items-center border rounded m-5 p-5">Another section here</div>
+    </div>
   );
 }
