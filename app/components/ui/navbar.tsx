@@ -6,7 +6,7 @@ import { GoPerson } from "react-icons/go";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosArrowForward } from "react-icons/io";
 import { navbarMenu } from "@/app/lib/data";
-import Cart from "@/app/components/ui/cart";
+import Cart from "./cart";
 
 import {
   Sheet,
@@ -19,7 +19,7 @@ import Link from "next/link";
 export default function Navbar() {
   const hoverEffect = "hover:scale-125 transition duration-500";
   return (
-    <div className="flex justify-between items-center mx-4 sm:mx-6 lg:mx-16 text-gray-800">
+    <div className="flex bg-white border-b border-slate-200 justify-between items-center px-4 sm:px-6 lg:px-16 text-gray-800">
       <div className="basis-1/3 flex items-center gap-6">
         <div className="sm:hidden flex items-center gap-2">
           <Sheet>
@@ -68,7 +68,7 @@ export default function Navbar() {
           </Sheet>
         </div>
 
-        <ul className="max-sm:hidden h-6 overflow-clip flex justify-center space-x-4 lg:space-x-7  ">
+        <ul className="max-sm:hidden h-6 overflow-clip flex justify-center space-x-4 lg:space-x-7">
           {navbarMenu.map((item, index) => (
             <li
               key={index}
@@ -84,14 +84,16 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <div className="basis-1/3 flex  justify-end sm:justify-center items-center text-2xl font-medium ">
-        <Image
-          src="/image/puffy_logo.png"
-          alt="Puffy Logo"
-          className=""
-          width={70}
-          height={70}
-        />
+      <div className="basis-1/3 flex justify-end sm:justify-center items-center text-2xl font-medium">
+        <Link href="/">
+          <Image
+            src="/image/puffy_logo.png"
+            alt="Puffy Logo"
+            width={70}
+            height={70}
+            priority
+          />
+        </Link>
       </div>
       <div className="basis-1/3 hidden sm:flex justify-end space-x-2 sm:max-lg:space-x-6 lg:space-x-8">
         <a href="mailto:OyH5o@example.com" target="_blank">
@@ -106,5 +108,6 @@ export default function Navbar() {
         <Cart />
       </div>
     </div>
+
   );
 }

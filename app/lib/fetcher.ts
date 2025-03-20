@@ -1,13 +1,13 @@
-const fetcher = async (url: string) => {
-    const response = await fetch(url);
-    if (!response.ok) {
+export const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    return response.json();
+    return res.json();
   };
   
-  const post = async (url: string, data: any) => {
-    const response = await fetch(url, {
+  export const post = async (url: string, data: any) => {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -15,12 +15,20 @@ const fetcher = async (url: string) => {
       body: JSON.stringify(data),
     });
   
-    if (!response.ok) {
+    if (!res.ok) {
       throw new Error("Failed to create product");
     }
   
-    return response.json();
+    return res.json();
   };
   
-  export { fetcher, post };
+  export const put = async (url: string, data: any) => {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update data');
+    return res.json();
+  };
   

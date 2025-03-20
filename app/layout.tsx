@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { CartProvider } from "./context/CartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,8 +13,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Puffy",
-  description: "Puffy - The best place to buy anything you want.",
+  title: "Puffy - Your One-Stop Shop",
+  description: "Discover our collection of premium products",
 };
 
 export default function RootLayout({
@@ -23,10 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className} antialiased`}>
-        <Navbar />
-        {children}
-        <Toaster />
+      <body className={`${inter.className} bg-slate-50 min-h-screen antialiased`}>
+        <CartProvider>
+          <Navbar />
+          <main className="">
+            {children}
+          </main>
+
+          <Toaster />
+        </CartProvider>
       </body>
     </html>
   );
