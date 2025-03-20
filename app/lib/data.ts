@@ -1,4 +1,4 @@
-const navbarMenu = [
+export const navbarMenu = [
    {
      name: 'Home',
      href: '/'
@@ -12,5 +12,3 @@ const navbarMenu = [
      href: '/new'
     }
 ]
-
-export {navbarMenu}

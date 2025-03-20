@@ -1,22 +1,39 @@
-
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const data = await req.json();
+    const { searchParams } = new URL(req.url);
 
-    // Ensure mainImage is provided
-    if (!data.mainImage) {
-      return NextResponse.json(
-        { error: "Main image is required" },
-        { status: 400 }
-      );
-    }
+    // Parse filters
+    const category = searchParams.get("category") || undefined;
+    const minPrice = Math.max(0, parseFloat(searchParams.get("minPrice") || "0"));
+    const maxPrice = Math.min(1000000, parseFloat(searchParams.get("maxPrice") || "1000000"));
+    const sortBy = searchParams.get("sortBy") || "createdAt";
+    const order = searchParams.get("order") === "asc" ? "asc" : "desc";
 
-    const product = await prisma.product.create({ data });
-    return NextResponse.json(product, { status: 201 });
+    // Build where clause
+    const where = {
+      ...(category && { category }),
+      price: { gte: minPrice, lte: maxPrice },
+    };
+
+    const products = await prisma.product.findMany({
+      where,
+      orderBy: { [sortBy]: order },
+      include: { 
+        reviews: {
+          select: {
+            rating: true,
+            comment: true,
+          }
+        }
+      },
+    });
+
+    return NextResponse.json({ products });
   } catch (error) {
+    console.error('Products API Error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unknown error occurred" },
       { status: 500 }
@@ -24,38 +41,30 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
 }
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const { searchParams } = new URL(req.url);
+    const data = await req.json();
 
-    // Filters
-    const category = searchParams.get("category") ?? undefined;
-    const minPrice = parseFloat(searchParams.get("minPrice") || "0");
-    const maxPrice = parseFloat(searchParams.get("maxPrice") || "1000000");
-    const sortBy = searchParams.get("sortBy") || "createdAt"; // Default sorting by newest
-    const order = searchParams.get("order") === "asc" ? "asc" : "desc";
+    // Validate required fields
+    if (!data.mainImage) {
+      return NextResponse.json(
+        { error: "Main image is required" },
+        { status: 400 }
+      );
+    }
 
-    // Pagination
-    const page = parseInt(searchParams.get("page") || "1");
-    const pageSize = parseInt(searchParams.get("pageSize") || "10");
-    const skip = (page - 1) * pageSize;
-
-    const products = await prisma.product.findMany({
-      where: {
-        category,
-        price: { gte: minPrice, lte: maxPrice },
+    // Create product with timestamps
+    const product = await prisma.product.create({
+      data: {
+        ...data,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-      orderBy: { [sortBy]: order },
-      include: { reviews: true },
-      skip,
-      take: pageSize,
     });
 
-    const totalProducts = await prisma.product.count();
-    const totalPages = Math.ceil(totalProducts / pageSize);
-
-    return NextResponse.json({ products, totalPages }, { status: 200 });
+    return NextResponse.json(product, { status: 201 });
   } catch (error) {
+    console.error('Product Creation Error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unknown error occurred" },
       { status: 500 }
