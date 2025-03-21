@@ -57,7 +57,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group relative overflow-hidden rounded border border-gray-100 bg-white transition-all hover:border-gray-200">
+    <div className="group relative overflow-hidden rounded border border-gray-100 bg-white transition-all lg:hover:border-gray-200">
       {/* Image Container */}
       <div className="relative bg-white aspect-square overflow-hidden">
         <Image
@@ -72,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Content Container with Background - Move transform to this div */}
-      <div className="relative flex flex-col bg-white transform transition-transform duration-300 group-hover:-translate-y-[42px]">
+      <div className="relative flex flex-col bg-white transform transition-transform duration-300 lg:group-hover:-translate-y-[42px]">
 
         {/* Product Info - Remove transform from here */}
         <div className="p-4 relative h-48 border-t border-slate-50 lg:h-full lg:pb-8 lg:pt-4">
