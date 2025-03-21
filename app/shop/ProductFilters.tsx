@@ -43,7 +43,7 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
         </div>
 
         {/* Category Filter */}
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <label className="text-xs font-medium text-gray-700">Category</label>
           <Select
             value={filters.category}
@@ -59,10 +59,10 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
               <SelectItem value="shoes">Shoes</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
 
         {/* Price Range Filter */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center col-span-2 gap-2">
           <label className="text-xs font-medium text-gray-700">Price</label>
           <div className="flex items-center gap-1">
             <Input
@@ -73,7 +73,7 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
                 const value = Number(e.target.value);
                 handleChange('minPrice', e.target.value ? (value < 0 ? 0 : value) : undefined);
               }}
-              className="h-8 w-20"
+              className="h-8 sm:w-20 w-full"
               min={0}
             />
             <span className="text-xs text-gray-500">-</span>
@@ -85,7 +85,7 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
                 const value = Number(e.target.value);
                 handleChange('maxPrice', e.target.value ? (value < 0 ? 0 : value) : undefined);
               }}
-              className="h-8 w-20"
+              className="h-8 sm:w-20 w-full"
               min={0}
             />
           </div>
