@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Product" ALTER COLUMN "additionalImages" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "color" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "size" SET DEFAULT ARRAY[]::TEXT[];

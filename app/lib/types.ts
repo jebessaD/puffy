@@ -31,6 +31,21 @@ export interface ProductFilters {
   maxPrice?: number;
   color?: string;
   size?: string;
-  sortBy?: 'price' | 'rating' | 'createdAt';
-  order?: 'asc' | 'desc';
-} 
+  sortBy?: "price" | "rating" | "createdAt";
+  order?: "asc" | "desc";
+}
+
+export interface CloudinaryResponse {
+  secure_url: string;
+  public_id: string;
+  asset_id: string;
+  format: string;
+  resource_type: string;
+}
+
+export interface SignatureResponse {
+  timestamp: number;
+  signature: string;
+  api_key: string;
+  cloud_name: string;
+}

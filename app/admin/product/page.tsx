@@ -69,7 +69,6 @@ const ProductForm = () => {
           control={control}
           setValue={setValue}
           watch={watch}
-          errors={errors}
           trigger={trigger}
         />
         <ProductImagesSection

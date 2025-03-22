@@ -75,18 +75,6 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
         <p className={errorMessageCSS}>{errors.stockQuantity.message}</p>
       )}
     </div>
-
-    <div className={inputContent}>
-      <label className="font-medium">Category</label>
-      <input
-        {...register("category")}
-        placeholder="Enter category"
-        className={inputBorderInput}
-      />
-      {errors.category && (
-        <p className={errorMessageCSS}>{errors.category.message}</p>
-      )}
-    </div>
   </div>
 );
 

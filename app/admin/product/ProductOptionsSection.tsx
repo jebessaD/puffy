@@ -4,19 +4,16 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Control,
-  FieldErrors,
   UseFormSetValue,
   UseFormWatch,
   UseFormTrigger,
 } from "react-hook-form";
 import { FormValues } from "../../lib/data.type";
-import ErrorMessage from "../../components/InputErrorDisplay";
 
 interface ProductOptionsSectionProps {
   control: Control<FormValues>;
   setValue: UseFormSetValue<FormValues>;
   watch: UseFormWatch<FormValues>;
-  errors: FieldErrors<FormValues>;
   trigger: UseFormTrigger<FormValues>;
 }
 
@@ -30,7 +27,6 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
   control,
   setValue,
   watch,
-  errors,
   trigger,
 }) => {
   const [colorInput, setColorInput] = useState<string>("");
@@ -94,7 +90,6 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
             Add
           </Button>
         </div>
-        <ErrorMessage errors={errors} fieldName="color" />
         <div className={`${iterableContentCSS} pt-2`}>
           {colors.map((color, index) => (
             <span key={index} className={iterableSpanCSS}>
@@ -126,7 +121,6 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
             Add
           </Button>
         </div>
-        <ErrorMessage errors={errors} fieldName="size" />
         <div className={`${iterableContentCSS} mt-2`}>
           {sizes.map((size, index) => (
             <span key={index} className={iterableSpanCSS}>
