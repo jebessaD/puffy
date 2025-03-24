@@ -48,6 +48,9 @@ const ProductForm = () => {
       reset({
         name: "",
         description: "",
+        price: 0,
+        discount: 0,
+        stockQuantity: 0,
         color: [],
         size: [],
         mainImage: "",
