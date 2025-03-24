@@ -83,13 +83,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.name}
               </h3>
               {/* Stock Status */}
-              <div>
+              {/* <div>
                 {product.stockQuantity > 0 ? (
                   <span className="text-sm text-green-600">In Stock ({product.stockQuantity})</span>
                 ) : (
                   <span className="text-sm text-red-600">Out of Stock</span>
                 )}
-              </div>
+              </div> */}
             </div>
 
             {/* Price */}

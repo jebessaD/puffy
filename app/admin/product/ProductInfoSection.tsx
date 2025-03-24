@@ -8,8 +8,9 @@ interface ProductInfoSectionProps {
 }
 
 const inputContent = "flex flex-col gap-1";
-const inputBorderInput = "border p-2 rounded";
+const inputBorderInput = "border border-gray-100 rounded py-3 p-2 outline-none focus:border-gray-400";
 const errorMessageCSS = "text-red-500 text-sm";
+const labelCSS = "block mb-2 font-medium text-gray-700";
 
 export default function ProductInfoSection({
   register,
@@ -22,9 +23,9 @@ export default function ProductInfoSection({
   const netPrice = price - (price * discount) / 100;
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className={inputContent}>
-        <label className="font-medium">Product Name</label>
+    <div className="grid grid-cols-1  lg:grid-cols-2 gap-6">
+      <div className={`${inputContent} lg:col-span-2`}>
+        <label className={labelCSS}>Product Name</label>
         <input
           {...register("name")}
           placeholder="Enter product name"
@@ -35,8 +36,8 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={inputContent}>
-        <label className="font-medium">Description</label>
+      <div className={`${inputContent} lg:col-span-2`}>
+        <label className={labelCSS}>Description</label>
         <textarea
           {...register("description")}
           placeholder="Enter description"
@@ -47,8 +48,8 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={inputContent}>
-        <label className="font-medium">Price in usd {netPrice == 0 ? "" : "- $ "+netPrice} <span className="text-gray-400 line-through font-light">{discount ? `($ ${price})`: ""}</span></label>
+      <div className={`${inputContent} `}>
+        <label className={labelCSS}>Price in usd {netPrice == 0 ? "" : "- $ "+netPrice} <span className="text-gray-400 line-through font-light">{discount ? `($ ${price})`: ""}</span></label>
         <input
           {...register("price")}
           type="number"
@@ -60,8 +61,8 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={inputContent}>
-        <label className="font-medium">Discount in percentage</label>
+      <div className={`${inputContent} `}>
+        <label className={labelCSS}>Discount in percentage <span className="text-gray-400 font-light text-sm">(Optional)</span></label>
         <input
           {...register("discount")}
           type="number"
@@ -73,11 +74,12 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={inputContent}>
-        <label className="font-medium">Stock Quantity</label>
+      <div className={`${inputContent} lg:col-span-2 hidden`}>
+        <label className={labelCSS}>Stock Quantity</label>
         <input
           {...register("stockQuantity")}
           type="number"
+          value={10000}
           placeholder="Enter stock quantity"
           className={inputBorderInput}
         />
