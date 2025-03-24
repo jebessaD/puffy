@@ -23,10 +23,9 @@ export const productSchema = z.object({
     .refine((val) => val !== 0, {
       message: "Stock quantity is required!",
     }),
-  category: z.string().min(1, "Category is required!"),
   color: z.array(z.string()),
   size: z.array(z.string()),
-  mainImage: z.string().min(1, "Main image is required!"),
+  mainImage: z.string().min(1, "Main image is required!").url("Invalid URL"),
   additionalImages: z.array(z.string()),
 });
 

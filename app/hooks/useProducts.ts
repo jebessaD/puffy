@@ -26,7 +26,6 @@ const useProducts = (filters?: ProductFilters) => {
 
   const createProduct = async (newProduct: FormValues) => {
     await post("/api/products", newProduct);
-    await mutate();
   };
 
   const updateProduct = async (productId: string, updatedProduct: FormValues) => {

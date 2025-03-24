@@ -28,7 +28,6 @@ const ProductForm = () => {
     defaultValues: {
       name: "",
       description: "",
-      category: "",
       color: [],
       size: [],
       mainImage: "",
@@ -36,7 +35,7 @@ const ProductForm = () => {
     },
   });
 
-  const { mutate, createProduct } = useProducts();
+  const { createProduct } = useProducts();
 
   const onSubmit: SubmitHandler<ProductFormValues> = async (data) => {
     try {
@@ -46,8 +45,17 @@ const ProductForm = () => {
         description: "Product has been created successfully.",
         variant: "default",
       });
-      reset();
-      mutate();
+      reset({
+        name: "",
+        description: "",
+        price: 0,
+        discount: 0,
+        stockQuantity: 0,
+        color: [],
+        size: [],
+        mainImage: "",
+        additionalImages: [],
+      });
     } catch (error) {
       toast({
         title: "Error!",
@@ -57,13 +65,15 @@ const ProductForm = () => {
     }
   };
 
+  console.log(errors)
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 pb-6 sm:pt-4 sm:px-12 bg-white rounded-2xl sm:shadow-md sm:m-8"
     >
       <DevTool control={control} />
-      <ProductInfoSection register={register} errors={errors} />
+      <ProductInfoSection register={register} errors={errors} watch={watch} />
       <div className="flex flex-col gap-4">
         <ProductOptionsSection
           control={control}
@@ -72,7 +82,6 @@ const ProductForm = () => {
           trigger={trigger}
         />
         <ProductImagesSection
-          control={control}
           setValue={setValue}
           watch={watch}
           errors={errors}
