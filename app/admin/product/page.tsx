@@ -50,7 +50,7 @@ const ProductForm = () => {
         description: "",
         price: 0,
         discount: 0,
-        stockQuantity: 0,
+        stockQuantity: 10000,
         color: [],
         size: [],
         mainImage: "",
@@ -65,35 +65,49 @@ const ProductForm = () => {
     }
   };
 
-  console.log(errors)
+  console.log(errors);
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 pb-6 sm:pt-4 sm:px-12 bg-white rounded-2xl sm:shadow-md sm:m-8"
+      className=" bg-white rounded-2xl bg-white p-4"
     >
       <DevTool control={control} />
-      <ProductInfoSection register={register} errors={errors} watch={watch} />
-      <div className="flex flex-col gap-4">
-        <ProductOptionsSection
-          control={control}
-          setValue={setValue}
-          watch={watch}
-          trigger={trigger}
-        />
-        <ProductImagesSection
-          setValue={setValue}
-          watch={watch}
-          errors={errors}
-          register={register}
-        />
-        <Button
-          type="submit"
-          disabled={isSubmitting || Object.keys(errors).length > 0}
-          className="py-5 w-full"
-        >
-          {isSubmitting ? "Creating..." : "Create Product"}
-        </Button>
+
+      <div className="grid grid-cols-2 gap-4 ">
+        <div className="bg-gray-50 rounded-xl p-6">
+          {" "}
+          <ProductInfoSection
+            register={register}
+            errors={errors}
+            watch={watch}
+          />
+          <ProductOptionsSection
+            control={control}
+            setValue={setValue}
+            watch={watch}
+            trigger={trigger}
+          />
+        </div>
+
+        <div className=" gap-4">
+          <ProductImagesSection
+            setValue={setValue}
+            watch={watch}
+            errors={errors}
+            register={register}
+          />
+
+          <div className="p-4">
+            <Button
+              type="submit"
+              disabled={isSubmitting || Object.keys(errors).length > 0}
+              className="p-5 w-full"
+            >
+              {isSubmitting ? "Creating..." : "Create Product"}
+            </Button>
+          </div>
+        </div>
       </div>
     </form>
   );
