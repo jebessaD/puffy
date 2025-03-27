@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
@@ -12,9 +11,10 @@ import { Product } from "../lib/types";
 import { Button } from "@/components/ui/button";
 import { productNotAvailable } from "@/app/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingCart, Heart } from "lucide-react";
-import { useCart } from "@/app/context/CartContext";
+import {  ShoppingCart } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useCartStore } from "../store/useCartStore";
+import { useRouter } from "next/navigation";
 
 interface ProductDetailModalProps {
   product: Product;
@@ -36,33 +36,42 @@ export default function ProductDetailModal({
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const allImages = [product.mainImage, ...product.additionalImages];
-  const { addItem } = useCart();
+
+  const router = useRouter();
+  const { setCheckoutProduct,checkoutProduct } = useCartStore();
+  console.log(checkoutProduct,"console log checkoutProduct");
+
   const { toast } = useToast();
 
-  const handleAddToCart = () => {
-    if (!selectedSize && product.size.length > 0) {
-      toast({
-        title: "Please select a size",
-        description: "Size selection is required",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!selectedColor && product.color.length > 0) {
-      toast({
-        title: "Please select a color",
-        description: "Color selection is required",
-        variant: "destructive",
-      });
-      return;
-    }
-    addItem(product);
+  const handleProceedToCheckout = () => {
+  if (!selectedSize && product.size.length > 0) {
     toast({
-      title: "Added to cart",
-      description: "Product added to cart successfully",
+      title: "Please select a size",
+      description: "Size selection is required",
+      variant: "destructive",
     });
-    onOpenChange(false);
-  };
+    return;
+  }
+  if (!selectedColor && product.color.length > 0) {
+    toast({
+      title: "Please select a color",
+      description: "Color selection is required",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  // Store selected product for checkout without affecting cart
+  setCheckoutProduct({
+    ...product,
+    quantity,
+    selectedColor,
+    selectedSize,
+  });
+
+  // Redirect to shipping address page
+  router.push("/shipping-address");
+};
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -290,7 +299,7 @@ export default function ProductDetailModal({
                   </Button> */}
                 </div>
                 <Button
-                  onClick={handleAddToCart}
+                  onClick={handleProceedToCheckout}
                   className="w-full text-xs md:text-sm h-9 md:h-10"
                   disabled={product.stockQuantity === 0}
                 >

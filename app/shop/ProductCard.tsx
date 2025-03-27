@@ -1,21 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { Product } from '@/app/lib/types';
 import { ShoppingCart, Heart } from 'lucide-react';
-import { useCart } from '@/app/context/CartContext';
 import { useToast } from '@/components/ui/use-toast';
 import { useState } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import { productNotAvailable } from "@/app/lib/utils";
+import { useCartStore } from '../store/useCartStore';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addItem, removeItem, items } = useCart();
+  const { items, removeItem, addItem } = useCartStore();
   const { toast } = useToast();
   const [showModal, setShowModal] = useState(false);
 

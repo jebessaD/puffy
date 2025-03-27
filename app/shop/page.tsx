@@ -44,7 +44,7 @@ export default function Home() {
 
       {/* Product Grid */}
       <div className="container relative py-8 mx-auto ">
-        {isLoading && (
+        {isLoading && products.length !== 0 && (
           <div className="bg-white bg-opacity-10 absolute mx-auto w-full z-10  flex-col space-y-2  justify-center flex min-h-[400px]  items-center ">
             <Loading />
             <p className="text-center   text-gray-600 ">Loading products...</p>

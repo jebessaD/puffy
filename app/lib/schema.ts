@@ -30,3 +30,18 @@ export const productSchema = z.object({
 });
 
 export type ProductFormValues = z.infer<typeof productSchema>;
+
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(5, "Phone number is required"),
+  address: z.string().min(1, "Address is required"),
+  address2: z.string().optional(),
+  city: z.string().min(1, "City is required"),
+  state:  z.string().optional(),
+  country: z.string().min(1, "Please select a country"),
+  postalCode: z.string().min(1, "Postal code is required"),
+});
+
+export type ShippingAddress = z.infer<typeof shippingAddressSchema>;
+

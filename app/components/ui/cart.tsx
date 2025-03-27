@@ -13,23 +13,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LiaShoppingBagSolid } from "react-icons/lia";
-import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useCartStore } from "@/app/store/useCartStore";
 
 export default function Cart() {
-  const { items, removeItem, updateQuantity, totalItems, totalPrice } =
-    useCart();
+
+  const { items, removeItem, updateQuantity,totalItems, totalPrice } = useCartStore();
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <div className="relative">
           <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 text-3xl" />
-          {totalItems > 0 && (
+          {totalItems() > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {totalItems}
+              {totalItems()}
             </span>
           )}
         </div>
@@ -52,7 +52,7 @@ export default function Cart() {
             </div>
           ) : (
             <SheetDescription className="text-center">
-              {`${totalItems} items in your cart`}
+              {`${totalItems()} items in your cart`}
             </SheetDescription>
           )}
         </SheetHeader>
@@ -118,7 +118,7 @@ export default function Cart() {
         <div className="border-t pt-4">
           <div className="flex justify-between mb-4">
             <span className="font-medium">Total:</span>
-            <span className="font-medium">${totalPrice.toFixed(2)}</span>
+            <span className="font-medium">${totalPrice().toFixed(2)}</span>
           </div>
           <SheetClose asChild>
             <Link href="/checkout">
