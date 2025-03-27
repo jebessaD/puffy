@@ -1,0 +1,2 @@
+export const productNotAvailable = "https://res.cloudinary.com/dyytavc8u/image/upload/v1743000074/products/tqzducbbuugzct3vfc3p.png"
+export const emptyImage = "https://res.cloudinary.com/dyytavc8u/image/upload/v1743012542/products/rnedsfvqzktkgqbxs5wc.png"

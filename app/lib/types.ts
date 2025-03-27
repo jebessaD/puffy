@@ -33,6 +33,7 @@ export interface ProductFilters {
   size?: string;
   sortBy?: "price" | "rating" | "createdAt";
   order?: "asc" | "desc";
+  search?: string;
 }
 
 export interface CloudinaryResponse {
