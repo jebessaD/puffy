@@ -1,6 +1,6 @@
 import React from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { TextInput } from "./FormInput";
+import { TextInput } from "../../components/custom/FormInput";
 import { SelectInput } from "./SelectInput";
 
 interface Props {

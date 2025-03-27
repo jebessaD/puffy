@@ -14,7 +14,6 @@ interface InputProps {
 export const TextInput: React.FC<InputProps> = ({
   label,
   name,
- 
   register,
   placeholder = "",
   type = "text",
