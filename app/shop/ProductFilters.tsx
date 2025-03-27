@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { ProductFilters } from '@/app/lib/types';
-import { SlidersHorizontal } from 'lucide-react';
+import { useState } from "react";
+import type { ProductFilters } from "@/app/lib/types";
+import { Search } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -16,13 +16,16 @@ interface ProductFiltersProps {
   onFilterChange: (filters: ProductFilters) => void;
 }
 
-export default function ProductFilters({ onFilterChange }: ProductFiltersProps) {
+export default function ProductFilters({
+  onFilterChange,
+}: ProductFiltersProps) {
   const [filters, setFilters] = useState<ProductFilters>({
-    category: '',
+    category: "",
     minPrice: undefined,
     maxPrice: undefined,
-    sortBy: 'createdAt',
-    order: 'desc',
+    sortBy: "createdAt",
+    order: "desc",
+    search: "",
   });
 
   const handleChange = (name: string, value: string | number | undefined) => {
@@ -35,11 +38,49 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
   };
 
   return (
-    <div className="rounded-md p-2 py-4 w-full bg-white border-b border-slate-100 border">
-      <div className="grid grid-cols-2 md:flex md:flex-row flex-col items-center md:justify-end gap-4">
-        <div className="col-span-2 flex  items-center gap-2 mr-auto">
-          <SlidersHorizontal className="h-4 w-4 text-gray-500" />
-          <h3 className="text-sm font-medium text-gray-900">Filters</h3>
+    <div className="rounded-md w-full p-4 flex justify-between ">
+      <div className=" w-full justify-between items-center gap-4 ">
+        <div className="mx-auto md:w-2/3 md:space-x-3 relative flex gap-2 md:flex-row flex-col justify-center items-center">
+          {" "}
+          {/* Increased gap and width */}
+          <div className="relative flex items-center flex-grow w-full">
+            <span className="absolute left-4 text-gray-400">
+              <Search size={24} /> {/* Increased icon size */}
+            </span>
+            <Input
+              type="search"
+              placeholder="Search..."
+              value={filters.search || ""}
+              onChange={(e) => handleChange("search", e.target.value)}
+              className="pl-12 h-12 w-full text-lg" /* Increased height, padding, and text size */
+            />
+          </div>
+          <div className="flex bg items-center gap-2 w-full md:w-auto ">
+            <label className="text-sm font-medium text-gray-700 text-nowrap">
+              Sort By
+            </label>
+            <Select
+              value={`${filters.sortBy}-${filters.order}`}
+              onValueChange={(value) => {
+                const [sortBy, order] = value.split("-");
+                handleChange("sortBy", sortBy);
+                handleChange("order", order);
+              }}
+            >
+              <SelectTrigger className="h-12 w-full md:max-w-[220px]">
+                {" "}
+                {/* Increased height and width */}
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt-desc">Newer to Older</SelectItem>
+                <SelectItem value="createdAt-asc">Older to Newer</SelectItem>
+                <SelectItem value="price-asc">Price: Low to High</SelectItem>
+                <SelectItem value="price-desc">Price: High to Low</SelectItem>
+          
+              </SelectContent>
+            </Select>
+          </div>{" "}
         </div>
 
         {/* Category Filter */}
@@ -62,7 +103,7 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
         </div> */}
 
         {/* Price Range Filter */}
-        <div className="flex items-center col-span-2 gap-2">
+        {/* <div className="flex items-center col-span-2 gap-2">
           <label className="text-xs font-medium text-gray-700">Price</label>
           <div className="flex items-center gap-1">
             <Input
@@ -89,43 +130,10 @@ export default function ProductFilters({ onFilterChange }: ProductFiltersProps) 
               min={0}
             />
           </div>
-        </div>
-
-        {/* Sort By Filter */}
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-medium text-gray-700">Sort</label>
-          <Select
-            value={filters.sortBy}
-            onValueChange={(value) => handleChange('sortBy', value)}
-          >
-            <SelectTrigger className="h-8 w-[140px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="createdAt">Time</SelectItem>
-              <SelectItem value="price">Price</SelectItem>
-              <SelectItem value="rating">Rating</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        </div> */}
 
         {/* Order Filter */}
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-medium text-gray-700">Order</label>
-          <Select
-            value={filters.order}
-            onValueChange={(value) => handleChange('order', value)}
-          >
-            <SelectTrigger className="h-8 w-[140px]">
-              <SelectValue placeholder="Order" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="desc">Descending</SelectItem>
-              <SelectItem value="asc">Ascending</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
       </div>
     </div>
   );
-} 
+}

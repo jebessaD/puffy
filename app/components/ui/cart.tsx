@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
+import { emptyImage, productNotAvailable } from "@/app/lib/utils";
 import {
   Sheet,
   SheetClose,
@@ -18,7 +19,8 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 export default function Cart() {
-  const { items, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
+  const { items, removeItem, updateQuantity, totalItems, totalPrice } =
+    useCart();
 
   return (
     <Sheet>
@@ -35,11 +37,24 @@ export default function Cart() {
       <SheetContent className="max-sm:px-3 text-gray-800  max-sm:w-full flex flex-col justify-between">
         <SheetHeader>
           <SheetTitle className="text-center">Shopping Cart</SheetTitle>
-          <SheetDescription className="text-center">
-            {items.length === 0
-              ? "Your cart is empty"
-              : `${totalItems} items in your cart`}
-          </SheetDescription>
+          {items.length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                src={emptyImage}
+                className="overlay"
+                alt="No products found"
+                width={200}
+                height={200}
+              />
+              <SheetDescription className="text-center">
+                Your cart is empty
+              </SheetDescription>
+            </div>
+          ) : (
+            <SheetDescription className="text-center">
+              {`${totalItems} items in your cart`}
+            </SheetDescription>
+          )}
         </SheetHeader>
 
         {/* Cart Items */}
@@ -51,7 +66,11 @@ export default function Cart() {
             >
               <div className="relative h-20 w-20 flex-shrink-0">
                 <Image
-                  src="https://picsum.photos/seed/product/400/400"
+                  src={
+                    item.product.mainImage.startsWith("http")
+                      ? item.product.mainImage
+                      : productNotAvailable
+                  }
                   alt={item.product.name}
                   fill
                   className="object-cover rounded-md"
@@ -65,7 +84,10 @@ export default function Cart() {
                 <div className="flex items-center gap-2 mt-2">
                   <button
                     onClick={() =>
-                      updateQuantity(item.product.id, Math.max(1, item.quantity - 1))
+                      updateQuantity(
+                        item.product.id,
+                        Math.max(1, item.quantity - 1)
+                      )
                     }
                     className="p-1 hover:bg-gray-100 rounded"
                   >
