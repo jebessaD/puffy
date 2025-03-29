@@ -38,9 +38,7 @@ export default function ProductDetailModal({
   const allImages = [product.mainImage, ...product.additionalImages];
 
   const router = useRouter();
-  const { setCheckoutProduct,checkoutProduct } = useCartStore();
-  console.log(checkoutProduct,"console log checkoutProduct");
-
+  const { setCheckoutProducts, checkoutProducts } = useCartStore();
   const { toast } = useToast();
 
   const handleProceedToCheckout = () => {
@@ -62,15 +60,15 @@ export default function ProductDetailModal({
   }
 
   // Store selected product for checkout without affecting cart
-  setCheckoutProduct({
+  setCheckoutProducts([{
     ...product,
     quantity,
     selectedColor,
     selectedSize,
-  });
+  }]);
 
   // Redirect to shipping address page
-  router.push("/shipping-address");
+  router.push(`order/shipping-address`);
 };
 
   return (

@@ -7,7 +7,7 @@ interface ProgressStepsProps {
 
 const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => {
   return (
-    <div className="relative flex justify-between items-center w-full max-w-4xl mx-auto mb-10">
+    <div className="relative flex justify-between items-center w-full max-w-4xl mx-auto ">
       {steps.map((step, index) => (
         <div key={index} className="relative flex flex-col items-center w-full">
           {/* Connector Line (Placed Behind Steps) */}
@@ -22,7 +22,7 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
 
           {/* Step Circle */}
           <div
-            className={`z-10 w-10 h-10 flex items-center justify-center rounded-full text-white font-semibold duration-300
+            className={`z-10 w-8 h-8 flex items-center justify-center rounded-full text-white font-semibold duration-300
               ${index <= currentStep ? "bg-black" : "bg-gray-300"}
             `}
           >
@@ -31,7 +31,7 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
 
           {/* Step Label */}
           <div className="mt-2 text-sm font-medium text-center">
-            <span className={`${index <= currentStep ? "text-black" : "text-gray-400"}`}>
+            <span className={`${index <= currentStep ? "text-black font-medium" : "text-gray-400"}`}>
               {step}
             </span>
           </div>

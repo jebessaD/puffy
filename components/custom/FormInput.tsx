@@ -21,7 +21,7 @@ export const TextInput: React.FC<InputProps> = ({
   label2,
 }) => (
   <div>
-    <label className="block mb-1">{label} {label2 && <span className="text-sm text-gray-500">{label2}</span>}</label>
+    <label className="block mb-1 text-sm text-gray-800">{label} {label2 && <span className="text-gray-500">{label2}</span>}</label>
     <input
       {...register(name)}
       type={type}
