@@ -12,6 +12,7 @@ import {
   FaApple,
   FaGoogle,
 } from "react-icons/fa";
+import { useState } from "react";
 
 interface Product {
   id: string;
@@ -52,6 +53,31 @@ const CheckoutPage = () => {
   }, 0);
 
   const totalSaved = totalOriginal - totalPrice;
+
+  const [error, setError] = useState<string | null>(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+      setLoading(true);
+      try {
+          const response = await fetch("/api/checkout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ checkoutProducts, shippingAddress, totalPrice }),
+          });
+
+          const { url } = await response.json();
+          if (url) {
+              window.location.href = url; // Redirect to Stripe
+          }
+      } catch (error) {
+          console.error("Checkout error", error);
+      } finally {
+          setLoading(false);
+      }
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
@@ -156,7 +182,7 @@ const CheckoutPage = () => {
             </select> */}
           </div>
 
-          <Button size={"lg"} className="rounded-sm h-10 w-full mt-4">
+          <Button onClick={handleCheckout} size={"lg"} className="rounded-sm h-10 w-full mt-4">
             Proceed to Payment
           </Button>
         </div>

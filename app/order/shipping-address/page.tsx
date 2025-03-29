@@ -42,6 +42,7 @@ const ShippingAddressForm: React.FC = () => {
 
   const onSubmit = (data: ShippingAddress) => {
     setShippingAddress(data);
+    
 
     if (isDefault) {
       localStorage.setItem("defaultShippingAddress", JSON.stringify(data));
