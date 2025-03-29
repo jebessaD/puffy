@@ -1,6 +1,6 @@
 import React from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { TextInput } from "../../components/custom/FormInput";
+import { TextInput } from "../../../components/custom/FormInput";
 import { SelectInput } from "./SelectInput";
 
 interface Props {
@@ -10,11 +10,9 @@ interface Props {
 
 export const FormFields: React.FC<Props> = ({ register, errors }) => (
   <div className="p-4">
-
-    
-
     {/* Personal Info */}
-    <h2 className=" text-lg font-medium mb-2">Personal Info</h2>
+
+    <h2 className="text-lg font-semibold mb-2">Personal Info</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
       <TextInput
         label="Full Name"
@@ -30,15 +28,21 @@ export const FormFields: React.FC<Props> = ({ register, errors }) => (
       />
       <TextInput
         label="Phone Number "
-        label2= "(with country code)"
+        label2="(with country code)"
         name="phone"
         register={register}
         error={errors.phone as any}
       />
     </div>
     {/* Address Info */}
-    <h2 className=" text-lg font-medium mb-2"> Address Info</h2>
+    <h2 className="text-lg font-semibold mb-2">Address Info</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <SelectInput
+        label="Country"
+        name="country"
+        register={register}
+        error={errors.country as any}
+      />
       <TextInput
         label="Address"
         name="address"
@@ -57,13 +61,13 @@ export const FormFields: React.FC<Props> = ({ register, errors }) => (
         register={register}
         error={errors.city as any}
       />
-      <TextInput label="State " label2="(Optional)" name="state" register={register} />
-      <SelectInput
-        label="Country"
-        name="country"
+      <TextInput
+        label="State "
+        label2="(Optional)"
+        name="state"
         register={register}
-        error={errors.country as any}
       />
+
       <TextInput
         label="Postal Code"
         name="postalCode"

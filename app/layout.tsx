@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
-import { CartProvider } from "./context/CartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,15 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-slate-50 min-h-screen antialiased`}>
-        <CartProvider>
-          <Navbar />
-          <main className="">
-            {children}
-          </main>
+      <body
+        className={`${inter.className} bg-slate-50 min-h-screen antialiased`}
+      >
+        <Navbar />
+        <main className="">{children}</main>
 
-          <Toaster />
-        </CartProvider>
+        <Toaster />
       </body>
     </html>
   );

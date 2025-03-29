@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Product } from "@/app/lib/types";
+import { ShippingAddress } from "../lib/schema";
 
 interface CartItem {
   product: Product;
@@ -17,12 +18,16 @@ export interface CheckoutProduct extends Product {
 
 interface CartState {
   items: CartItem[];
+  checkoutProducts: CheckoutProduct[];
+  shippingAddress?: ShippingAddress;
+  
   addItem: (
     product: Product,
     quantity?: number,
     size?: string,
     color?: string
   ) => void;
+
   removeItem: (productId: number, size?: string, color?: string) => void;
   updateQuantity: (
     productId: number,
@@ -30,24 +35,25 @@ interface CartState {
     size?: string,
     color?: string
   ) => void;
+
   clearCart: () => void;
+  clearShippingAddress: () => void;
+
   totalItems: () => number;
   totalPrice: () => number;
-  setCheckoutProduct: (product: CheckoutProduct) => void;
-  checkoutProduct?: CheckoutProduct;
+
+  setCheckoutProducts: (products: CheckoutProduct[]) => void;
+  setShippingAddress: (address: ShippingAddress) => void;
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      checkoutProducts: [],
+      shippingAddress: undefined,
 
-      addItem: (
-        product: Product,
-        quantity = 1,
-        size?: string,
-        color?: string
-      ) => {
+      addItem: (product, quantity = 1, size, color) => {
         set((state) => {
           const existingItem = state.items.find(
             (item) =>
@@ -74,7 +80,7 @@ export const useCartStore = create<CartState>()(
         });
       },
 
-      removeItem: (productId: number, size?: string, color?: string) => {
+      removeItem: (productId, size, color) => {
         set((state) => ({
           items: state.items.filter(
             (item) =>
@@ -87,12 +93,7 @@ export const useCartStore = create<CartState>()(
         }));
       },
 
-      updateQuantity: (
-        productId: number,
-        quantity: number,
-        size?: string,
-        color?: string
-      ) => {
+      updateQuantity: (productId, quantity, size, color) => {
         set((state) => ({
           items: state.items.map((item) =>
             item.product.id === productId &&
@@ -103,12 +104,19 @@ export const useCartStore = create<CartState>()(
           ),
         }));
       },
-      setCheckoutProduct: (product) => set({ checkoutProduct: product }),
 
-      clearCart: () => set({ items: [] }),
+      setCheckoutProducts: (products) => {
+        set(() => ({
+          checkoutProducts: products, 
+        }));
+      },
+      
 
-      totalItems: () =>
-        get().items.reduce((sum, item) => sum + item.quantity, 0),
+      clearCart: () => set({ items: [], checkoutProducts: [] }),
+      setShippingAddress: (address) => set({ shippingAddress: address }),
+      clearShippingAddress: () => set({ shippingAddress: undefined }),
+
+      totalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
 
       totalPrice: () =>
         get().items.reduce((sum, item) => {
@@ -120,7 +128,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "cart-storage",
-      storage: createJSONStorage(() => localStorage), // ✅ FIXED: Correct storage format!
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
