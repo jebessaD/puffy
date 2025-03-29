@@ -1,10 +1,10 @@
-"use client"; // This makes it a Client Component
+"use client";
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
@@ -61,5 +61,13 @@ export default function SuccessPage() {
         Return to Home
       </Link>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<p className="text-center py-12">Loading...</p>}>
+      <SuccessContent />
+    </Suspense>
   );
 }
