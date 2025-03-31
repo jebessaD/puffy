@@ -11,7 +11,7 @@ import Image from "next/image";
 
 export default function Home() {
   const [filters, setFilters] = useState<ProductFiltersType>({});
-  const { products = [], isLoading, isError } = useProducts(filters);
+  const { products = [], isLoading, isError, mutate } = useProducts(filters);
 
   if (isError) {
     return (
@@ -72,7 +72,7 @@ export default function Home() {
         {products.length > 0 && (
           <div className="grid grid-cols-2 gap-2 md:gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
             {products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard mutate={mutate} key={product.id} product={product} />
             ))}
           </div>
         )}
