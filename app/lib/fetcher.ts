@@ -31,4 +31,12 @@ export const fetcher = async (url: string) => {
     if (!res.ok) throw new Error('Failed to update data');
     return res.json();
   };
+
+  export const deleteData = async (url: string) => {
+    const res = await fetch(url, {
+      method: 'PATCH',
+    });
+    if (!res.ok) throw new Error('Failed to delete data');
+    return res.json();
+  };
   
