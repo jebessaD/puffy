@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Product } from '@/app/lib/types';
-import { ShoppingCart, Heart } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import Image from "next/image";
+import { Product } from "@/app/lib/types";
+import { ShoppingCart, Heart } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import { productNotAvailable } from "@/app/lib/utils";
-import { useCartStore } from '../store/useCartStore';
+import { useCartStore } from "../store/useCartStore";
 
 interface ProductCardProps {
   product: Product;
@@ -19,13 +19,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [showModal, setShowModal] = useState(false);
 
   // Check if product is in cart
-  const isInCart = items.some(item => item.product.id === product.id);
+  const isInCart = items.some((item) => item.product.id === product.id);
 
   // Default image URL if mainImage is not provided or invalid
-  const imageUrl =  product.mainImage?.startsWith('http')
-      ? product.mainImage
-      : productNotAvailable
-  
+  const imageUrl = product.mainImage?.startsWith("http")
+    ? product.mainImage
+    : productNotAvailable;
 
   // Calculate discounted price if discount exists
   const discountedPrice = product.discount
@@ -60,7 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <div 
+      <div
         className="group relative overflow-hidden rounded  border border-gray-100 bg-white transition-all lg:hover:border-gray-200 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
@@ -83,9 +82,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Main Content */}
             <div className="space-y-2">
               <div className="flex justify-between">
-                <h3 className="text-lg text-gray-900">
-                  {product.name}
-                </h3>
+                <h3 className="text-lg text-gray-900">{product.name}</h3>
                 {/* Stock Status */}
                 {/* <div>
                   {product.stockQuantity > 0 ? (
@@ -99,11 +96,15 @@ export default function ProductCard({ product }: ProductCardProps) {
               {/* Price */}
               <div className="flex items-center justify-between">
                 <div className="flex flex-col mb-2 gap-1 sm:gap-2">
-                  <span className="text-xl font-bold text-gray-900">
-                    {discountedPrice.toFixed(2) ? `${discountedPrice.toFixed(2)}` : ""}
+                  <span className="text-xl font-medium text-gray-900 flex items-end">
+                    <span>{Math.floor(discountedPrice)}</span>
+
+                    <span className="text-sm mb-0.5 font-normal text-gray-700">
+                      .{discountedPrice.toFixed(2).split(".")[1]}
+                    </span>
                   </span>
                   {product.discount ? (
-                    <div className='flex text-xs items-center gap-1 sm:gap-2'>
+                    <div className="flex text-xs items-center gap-1 sm:gap-2">
                       <span className="text-gray-500 line-through">
                         ${product?.price?.toFixed(2)}
                       </span>
@@ -111,11 +112,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                         -{product.discount}%
                       </span>
                     </div>
-                  ) : <div className='h-4'></div>}
+                  ) : (
+                    <div className="h-4"></div>
+                  )}
                 </div>
 
                 {/* Rating */}
-                {product.averageRating > 0 && (
+                {/* {product.averageRating > 0 && (
                   <div className="flex items-center gap-1">
                     <span className="text-yellow-400">★</span>
                     <span className="text-sm text-gray-600">
@@ -125,7 +128,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                       ({product.numReviews})
                     </span>
                   </div>
-                )}
+                )} */}
               </div>
 
               {/* Category */}
@@ -144,9 +147,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               className={`
                 absolute left-4 right-4 px-4 py-2 rounded-sm mb-4 mt-auto font-medium
                 transform transition-all duration-300
-                ${isInCart
-                  ? 'bg-red-100 text-red-600 hover:bg-red-200'
-                  : 'bg-black text-white hover:bg-gray-800'
+                ${
+                  isInCart
+                    ? "bg-red-100 text-red-600 hover:bg-red-200"
+                    : "bg-black text-white hover:bg-gray-800"
                 }
                 opacity-100 lg:opacity-0 lg:group-hover:opacity-100
                 translate-y-4 lg:translate-y-2 lg:group-hover:translate-y-4
@@ -155,7 +159,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             >
               <div className="flex items-center md:text-base text-sm justify-center gap-2">
                 <ShoppingCart className="h-3 md:h-5 w-3 md:w-5" />
-                {isInCart ? 'Remove' : 'Add to Cart'}
+                {isInCart ? "Remove" : "Add to Cart"}
               </div>
             </button>
           </div>
