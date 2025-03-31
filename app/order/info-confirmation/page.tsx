@@ -36,10 +36,6 @@ const CheckoutPage = () => {
     return discount ? price - (price * discount) / 100 : price;
   };
 
-  if (!checkoutProducts || checkoutProducts.length === 0) {
-    return <p className="text-red-500 font-semibold">No products in cart.</p>;
-  }
-
   const totalPrice = checkoutProducts.reduce((acc, product) => {
     return (
       acc +
@@ -53,6 +49,7 @@ const CheckoutPage = () => {
   }, 0);
 
   const totalSaved = totalOriginal - totalPrice;
+  console.log("Total Price:", totalPrice, "Total Saved:", totalSaved, "Total Original:", totalOriginal);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -78,6 +75,10 @@ const CheckoutPage = () => {
       }
   };
 
+
+  if (!checkoutProducts || checkoutProducts.length === 0) {
+    return <p className="text-red-500 font-semibold">No products in cart.</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
