@@ -3,24 +3,21 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } } // More specific type for params
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
-    const { id } = await context.params; // This is now properly typed
+    const { id } = await params; // ✅ Await params (Next.js 15+ change)
 
-    console.log("here is an id", id);
-    if (!id) {
-      return NextResponse.json(
-        { error: "Product ID is required" },
-        { status: 400 }
-      );
+    // Ensure ID is valid (if using auto-increment numbers)
+    const numericId = parseInt(id, 10);
+    if (isNaN(numericId)) {
+      return NextResponse.json({ error: "Invalid Product ID" }, { status: 400 });
     }
 
     const data = await req.json();
 
-    // Update product with timestamps
     const product = await prisma.product.update({
-      where: { id: Number(id) },
+      where: { id: numericId },
       data: {
         ...data,
         updatedAt: new Date(),
@@ -31,10 +28,7 @@ export async function PUT(
   } catch (error) {
     console.error("Product Update Error:", error);
     return NextResponse.json(
-      {
-        error:
-          error instanceof Error ? error.message : "Unknown error occurred",
-      },
+      { error: error instanceof Error ? error.message : "Failed to update product" },
       { status: 500 }
     );
   }
