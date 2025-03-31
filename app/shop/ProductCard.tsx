@@ -1,22 +1,30 @@
 "use client";
 
-import Image from "next/image";
-import { Product } from "@/app/lib/types";
-import { ShoppingCart, Heart } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import Image from 'next/image';
+import { Product } from '@/app/lib/types';
+import { ShoppingCart, Heart, Pencil, Trash2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import { useState } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import { productNotAvailable } from "@/app/lib/utils";
-import { useCartStore } from "../store/useCartStore";
+import { useCartStore } from '../store/useCartStore';
+import { usePathname, useRouter } from 'next/navigation';
+import EditProductDialog from "@/app/admin/edit/EditProductDialog";
+import { MutatorCallback } from 'swr';
 
 interface ProductCardProps {
   product: Product;
+  mutate: MutatorCallback;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, mutate }: ProductCardProps) {
   const { items, removeItem, addItem } = useCartStore();
   const { toast } = useToast();
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const isAdminEdit = pathname.startsWith("/admin/edit");
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   // Check if product is in cart
   const isInCart = items.some((item) => item.product.id === product.id);
@@ -57,11 +65,38 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const handleEdit = () => {
+    setIsEditDialogOpen(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/products/${product.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete product");
+
+      toast({
+        title: "Success",
+        description: "Product deleted successfully",
+        variant: "default",
+      });
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete product",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       <div
         className="group relative overflow-hidden rounded  border border-gray-100 bg-white transition-all lg:hover:border-gray-200 cursor-pointer"
-        onClick={() => setShowModal(true)}
+        onClick={isAdminEdit ? undefined : () => setShowModal(true)}
       >
         {/* Image Container */}
         <div className="relative bg-white h-32 lg:h-auto lg:aspect-square overflow-hidden">
@@ -138,6 +173,32 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Add to Cart Button - Positioned absolutely */}
+            {isAdminEdit ? (
+                // Admin Edit/Delete Buttons
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleEdit}
+                    className="flex-1 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 
+                      rounded-sm font-medium transform transition-all duration-300
+                      opacity-100 lg:opacity-0 lg:group-hover:opacity-100
+                      flex items-center justify-center gap-2"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="flex-1 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100
+                      rounded-sm font-medium transform transition-all duration-300
+                      opacity-100 lg:opacity-0 lg:group-hover:opacity-100
+                      flex items-center justify-center gap-2"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete
+                  </button>
+                </div>
+              )
+            : (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -162,6 +223,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {isInCart ? "Remove" : "Add to Cart"}
               </div>
             </button>
+            )}
           </div>
         </div>
       </div>
@@ -171,6 +233,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         open={showModal}
         onOpenChange={setShowModal}
       />
+
+      <EditProductDialog
+        product={product}
+        isOpen={isEditDialogOpen}
+        onClose={() => setIsEditDialogOpen(false)}
+        mutate={mutate}
+       />
     </>
   );
 }
