@@ -48,49 +48,44 @@ const CheckoutPage = () => {
     return acc + product.quantity * product.price;
   }, 0);
 
-  const totalSaved = totalOriginal - totalPrice;
-  console.log("Total Price:", totalPrice, "Total Saved:", totalSaved, "Total Original:", totalOriginal);
-
-  const [error, setError] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async () => {
-      setLoading(true);
-      try {
-          const response = await fetch("/api/checkout", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ checkoutProducts, shippingAddress, totalPrice }),
-          });
+    setLoading(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ checkoutProducts, shippingAddress, totalPrice }),
+      });
 
-          const { url } = await response.json();
-          if (url) {
-              window.location.href = url; // Redirect to Stripe
-          }
-      } catch (error) {
-          console.error("Checkout error", error);
-      } finally {
-          setLoading(false);
+      const { url } = await response.json();
+      if (url) {
+        window.location.href = url; // Redirect to Stripe
       }
+    } catch (error) {
+      console.error("Checkout error", error);
+    } finally {
+      setLoading(false);
+    }
   };
-
 
   if (!checkoutProducts || checkoutProducts.length === 0) {
     return <p className="text-red-500 font-semibold">No products in cart.</p>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      <div className="fixed left-0 right-0 top-0 flex items-center justify-between p-4 bg-gray-50 z-20">
+    <div className="flex">
+      <div className="fixed flex-col sm:flex-row bg-white border-b border-gray-100 left-0 right-0 top-0 flex items-center justify-between sm:p-4 p-2 bg-gray-50 z-20">
         <Button variant="outline" onClick={() => window.history.back()}>
           Back
         </Button>
         <ProgressSteps steps={steps} currentStep={2} />
       </div>
 
-      <div className="flex w-full mx-auto">
-        <div className="basis-3/4 p-4 md:p-16">
+      <div className="flex flex-col sm:flex-row w-full mx-auto">
+        <div className="basis-1/2 md:basis-3/4 py-16 px-8 md:px-16">
           {checkoutProducts.map((product) => (
             <div
               key={product.id}
@@ -131,11 +126,13 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <div className="basis-1/4 bg-white p-6 rounded-lg">
-          <div className="mb-6">
-            <h2 className="font-semibold text-lg my-2">Ship to</h2>
+        <div className="basis-1/2  md:basis-1/4 flex h-[89vh] flex-col justify-between bg-white h-full p-6 rounded-lg">
+          <div className="mb-8 mt-4">
+            <h2 className="font-semibold text-lg border-b mb-3 border-gray-100 py-2">
+              Ship to
+            </h2>
             {shippingAddress ? (
-              <div className="bg-gray-50 p-4 my-5 rounded-lg border border-gray-100">
+              <div className="border-b pb-4 border-gray-100">
                 <div className=" space-y-3 text-gray-700">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-gray-500" />
@@ -166,26 +163,32 @@ const CheckoutPage = () => {
 
           <div className="mb-6">
             <h2 className="font-semibold text-lg mb-4">
-              Payment<span className="text-gray-500 "> Credit Card</span>
+              Payment
+              <span className="text-gray-500 ">
+                {" "}
+                <span>|</span> Credit Cards
+              </span>
             </h2>
-            <div className="flex items-center space-x-2 w-[80%] justify-between mx-auto ">
-              <FaCcVisa className="text-2xl" />
-              <FaCcMastercard className="text-2xl" />{" "}
-              <FaCcAmex className="text-2xl" />{" "}
-              <FaCcDiscover className="text-2xl" />{" "}
-              <FaCcPaypal className="text-2xl" />{" "}
-              <FaApple className="text-2xl" />
+            <div className="flex justify-between">
+              <FaCcVisa className="text-3xl text-neutral-700" />
+              <FaCcMastercard className="text-3xl text-neutral-700" />{" "}
+              <FaCcAmex className="text-3xl text-neutral-700" />{" "}
+              <FaCcDiscover className="text-3xl text-neutral-700" />{" "}
+              <FaCcPaypal className="text-3xl text-neutral-700" />{" "}
             </div>
-
             {/* <select className="w-full p-2 border rounded-md">
               <option>Credit Card</option>
               <option>PayPal</option>
-            </select> */}
+            </select> */}{" "}
+            <Button
+              onClick={handleCheckout}
+              size={"lg"}
+              className="rounded-sm h-10 w-full mt-4"
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Proceed to Payment"}
+            </Button>
           </div>
-
-          <Button onClick={handleCheckout} size={"lg"} className="rounded-sm h-10 w-full mt-4">
-            Proceed to Payment
-          </Button>
         </div>
       </div>
     </div>

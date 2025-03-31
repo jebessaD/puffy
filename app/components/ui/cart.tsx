@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { emptyImage, productNotAvailable } from "@/app/lib/utils";
 import {
@@ -15,12 +17,37 @@ import {
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import Link from "next/link";
 import { useCartStore } from "@/app/store/useCartStore";
+import { Product } from "@/app/lib/types";
+
+interface CheckoutProduct extends Product {
+  quantity: number;
+  selectedColor: string;
+  selectedSize: string;
+}
 
 export default function Cart() {
+  const { items, removeItem, updateQuantity, totalItems,setCheckoutProducts, totalPrice } = useCartStore();
+  const router = useRouter();
 
-  const { items, removeItem, updateQuantity,totalItems, totalPrice } = useCartStore();
+  // Fix: Explicitly define the state type
+
+  const handleProceedToCheckout = () => {
+    if (items.length === 0) return;
+
+    const checkoutData: CheckoutProduct[] = items.map((item) => ({
+      ...item.product,
+      quantity: item.quantity,
+      selectedColor: "not selected",
+      selectedSize: "not selected",
+    }));
+
+    console.log("Checkout Data:", checkoutData);
+    setCheckoutProducts(checkoutData);
+
+    // Redirect to shipping address page
+    router.push("/order/shipping-address");
+  };
 
   return (
     <Sheet>
@@ -34,21 +61,13 @@ export default function Cart() {
           )}
         </div>
       </SheetTrigger>
-      <SheetContent className="max-sm:px-3 text-gray-800  max-sm:w-full flex flex-col justify-between">
+      <SheetContent className="max-sm:px-3 text-gray-800 max-sm:w-full flex flex-col justify-between">
         <SheetHeader>
           <SheetTitle className="text-center">Shopping Cart</SheetTitle>
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center">
-              <Image
-                src={emptyImage}
-                className="overlay"
-                alt="No products found"
-                width={200}
-                height={200}
-              />
-              <SheetDescription className="text-center">
-                Your cart is empty
-              </SheetDescription>
+              <Image src={emptyImage} className="overlay" alt="No products found" width={200} height={200} />
+              <SheetDescription className="text-center">Your cart is empty</SheetDescription>
             </div>
           ) : (
             <SheetDescription className="text-center">
@@ -60,17 +79,10 @@ export default function Cart() {
         {/* Cart Items */}
         <div className="flex-1 overflow-y-auto py-4">
           {items.map((item) => (
-            <div
-              key={item.product.id}
-              className="flex items-center gap-4 py-4 border-b"
-            >
+            <div key={item.product.id} className="flex items-center gap-4 py-4 border-b">
               <div className="relative h-20 w-20 flex-shrink-0">
                 <Image
-                  src={
-                    item.product.mainImage.startsWith("http")
-                      ? item.product.mainImage
-                      : productNotAvailable
-                  }
+                  src={item.product.mainImage.startsWith("http") ? item.product.mainImage : productNotAvailable}
                   alt={item.product.name}
                   fill
                   className="object-cover rounded-md"
@@ -78,26 +90,17 @@ export default function Cart() {
               </div>
               <div className="flex-1">
                 <h3 className="font-medium">{item.product.name}</h3>
-                <p className="text-sm text-gray-500">
-                  ${item.product.price.toFixed(2)}
-                </p>
+                <p className="text-sm text-gray-500">${item.product.price.toFixed(2)}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <button
-                    onClick={() =>
-                      updateQuantity(
-                        item.product.id,
-                        Math.max(1, item.quantity - 1)
-                      )
-                    }
+                    onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() =>
-                      updateQuantity(item.product.id, item.quantity + 1)
-                    }
+                    onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Plus className="h-4 w-4" />
@@ -121,11 +124,9 @@ export default function Cart() {
             <span className="font-medium">${totalPrice().toFixed(2)}</span>
           </div>
           <SheetClose asChild>
-            <Link href="/checkout">
-              <Button type="submit" className="w-full">
-                Proceed to Checkout
-              </Button>
-            </Link>
+            <Button onClick={handleProceedToCheckout} type="submit" className="w-full">
+              Proceed to Checkout
+            </Button>
           </SheetClose>
         </div>
       </SheetContent>

@@ -12,8 +12,9 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 const ShippingAddressForm: React.FC = () => {
   const [isDefault, setIsDefault] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { checkoutProducts,setShippingAddress } = useCartStore();
+  const { checkoutProducts, setShippingAddress } = useCartStore();
   const steps = ["Shipping Address", "Checkout"];
 
   const form = useForm<ShippingAddress>({
@@ -40,16 +41,19 @@ const ShippingAddressForm: React.FC = () => {
     }
   }, [form]);
 
-  const onSubmit = (data: ShippingAddress) => {
-    setShippingAddress(data);
-    
+  const onSubmit = async (data: ShippingAddress) => {
+    setLoading(true);
+    try {
+      setShippingAddress(data);
 
-    if (isDefault) {
-      localStorage.setItem("defaultShippingAddress", JSON.stringify(data));
+      if (isDefault) {
+        localStorage.setItem("defaultShippingAddress", JSON.stringify(data));
+      }
+      console.log("checkout products:", checkoutProducts);
+      router.push("/order/info-confirmation");
+    } finally {
+      setLoading(false);
     }
-    console.log("checout products:", checkoutProducts);
-    router.push("/order/info-confirmation");
-    
   };
 
   return (
@@ -79,8 +83,13 @@ const ShippingAddressForm: React.FC = () => {
           </label>
         </div>
 
-        <Button size={"lg"} className="rounded-sm h-10" type="submit">
-          Continue to Payment
+        <Button
+          size={"lg"}
+          className="rounded-sm h-10"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Continue to Payment"}
         </Button>
       </div>
     </form>
