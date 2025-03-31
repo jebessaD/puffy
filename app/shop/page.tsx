@@ -49,31 +49,38 @@ export default function Home() {
             <Loading />
             <p className="text-center   text-gray-600 ">Loading products...</p>
           </div>
-        ) : (
-          products.length === 0 ? (
-            <div className="flex min-h-[400px]  items-center justify-center ">
-              <div className="text-center">
-                <Image
-                  src={emptyImage}
-                  className="mix-blend-multiply"
-                  alt={"No products found"}
-                  width={200}
-                  height={200}
-                  priority={false}
-                />
-                <h3 className="text-xl font-semibold text-gray-900">
-                  No products found
-                </h3>
-                <p className="mt-2 text-gray-600">Try adjusting your filters</p>
-              </div>
+        ) : products.length === 0 ? (
+          <div className="flex min-h-[400px]  items-center justify-center ">
+            <div className="text-center">
+              <Image
+                src={emptyImage}
+                className="mix-blend-multiply"
+                alt={"No products found"}
+                width={200}
+                height={200}
+                priority={false}
+              />
+              <h3 className="text-xl font-semibold text-gray-900">
+                No products found
+              </h3>
+              <p className="mt-2 text-gray-600">Try adjusting your filters</p>
             </div>
-          ) : <></>
+          </div>
+        ) : (
+          <></>
         )}
         {products.length > 0 && (
           <div className="grid grid-cols-2 gap-2 md:gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
-            {products.map((product: Product) => (
-              <ProductCard mutate={mutate} key={product.id} product={product} />
-            ))}
+            {products.map(
+              (product: Product) =>
+                product.deleteStatus || (
+                  <ProductCard
+                    mutate={mutate}
+                    key={product.id}
+                    product={product}
+                  />
+                )
+            )}
           </div>
         )}
       </div>

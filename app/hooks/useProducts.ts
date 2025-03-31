@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetcher, post, put } from "../lib/fetcher";
+import { fetcher, post, put, deleteData } from "../lib/fetcher";
 import { FormValues } from "../lib/data.type";
 
 interface ProductFilters {
@@ -41,12 +41,16 @@ const useProducts = (filters?: ProductFilters) => {
     await put(`/api/products/${productId}`, updatedProduct);
   };
 
+  const deleteProduct = async (productId: number) => {
+    await deleteData(`/api/products/${productId}`);
+  }
   return {
     products: data?.products || [], // Old products remain while fetching new ones
     isLoading,
     isError: error,
     createProduct,
     updateProduct,
+    deleteProduct,
     mutate,
   };
 };
