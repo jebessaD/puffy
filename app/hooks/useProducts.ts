@@ -35,11 +35,10 @@ const useProducts = (filters?: ProductFilters) => {
   };
 
   const updateProduct = async (
-    productId: string,
+    productId: number,
     updatedProduct: FormValues
   ) => {
     await put(`/api/products/${productId}`, updatedProduct);
-    await mutate();
   };
 
   return {
