@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import EditProductDialog from "@/app/admin/edit/EditProductDialog";
 import { DeleteProductDialog } from "../admin/delete/DeleteProductDialog";
 import { MutatorCallback } from "swr";
+import { LiaShippingFastSolid } from "react-icons/lia";
 
 interface ProductCardProps {
   product: Product;
@@ -72,7 +73,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
   return (
     <>
       <div
-        className="group relative overflow-hidden rounded  border border-gray-100 bg-white transition-all lg:hover:border-gray-200 cursor-pointer"
+        className="group relative overflow-hidden rounded  border border-gray-200 bg-white transition-all lg:hover:border-gray-200 cursor-pointer"
         onClick={isAdminEdit ? undefined : () => setShowModal(true)}
       >
         {/* Image Container */}
@@ -88,13 +89,13 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
         </div>
 
         {/* Content Container with Background - Move transform to this div */}
-        <div className="relative flex flex-col bg-white transform transition-transform duration-300 lg:group-hover:-translate-y-[42px]">
+        <div className="relative flex flex-col bg-white transform transition-transform duration-300 lg:group-hover:-translate-y-[56px]">
           {/* Product Info - Remove transform from here */}
-          <div className="p-2 md:p-4 relative h-48 border-t border-slate-50 lg:h-full lg:pb-8 lg:pt-4">
+          <div className="p-2 md:p-4 relative h-48 border-t border-slate-50 lg:h-full lg:pb-4 lg:pt-4">
             {/* Main Content */}
             <div className="space-y-2">
               <div className="flex justify-between">
-                <h3 className="text-lg text-gray-900">{product.name}</h3>
+                <h3 className="text-lg text-gray-900 mb-1">{product.name}</h3>
                 {/* Stock Status */}
                 {/* <div>
                   {product.stockQuantity > 0 ? (
@@ -106,27 +107,34 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col mb-2 gap-1 sm:gap-2">
-                  <span className="text-xl font-medium text-gray-900 flex items-end">
-                    <span>{Math.floor(discountedPrice)}</span>
+              <div className="">
+                <div className="flex w-full items-end justify-between gap-2">
+                  <div className="">
+                    {product.discount ? (
+                      <div className="flex text-xs items-center gap-1 sm:gap-2">
+                        <span className="text-gray-500 line-through">
+                          ${product?.price?.toFixed(2)}
+                        </span>
+                        <span className="rounded-full flex justify-end bg-green-100 px-2 py-px text-xs font-medium text-green-600">
+                          -{product.discount}%
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="h-4"></div>
+                      // <></>
+                    )}
+                    <span className="text-xl font-medium text-gray-900 flex items-end">
+                      <span>{Math.floor(discountedPrice)}</span>
 
-                    <span className="text-sm mb-0.5 font-normal text-gray-700">
-                      .{discountedPrice.toFixed(2).split(".")[1]}
+                      <span className="text-sm mb-0.5 font-normal text-gray-700">
+                        .{discountedPrice.toFixed(2).split(".")[1]}
+                      </span>
                     </span>
-                  </span>
-                  {product.discount ? (
-                    <div className="flex text-xs items-center gap-1 sm:gap-2">
-                      <span className="text-gray-500 line-through">
-                        ${product?.price?.toFixed(2)}
-                      </span>
-                      <span className="rounded-full bg-red-100 px-2 py-px text-xs font-medium text-red-600">
-                        -{product.discount}%
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="h-4"></div>
-                  )}
+                  </div>
+                  <p className="text-sm bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 flex">
+                    <LiaShippingFastSolid />{" "}
+                    <span className="text-xs">Free Shipping</span>{" "}
+                  </p>
                 </div>
 
                 {/* Rating */}
@@ -152,7 +160,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
             {/* Add to Cart Button - Positioned absolutely */}
             {isAdminEdit ? (
               // Admin Edit/Delete Buttons
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-6">
                 <button
                   onClick={handleEdit}
                   className="flex-1 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 

@@ -1,20 +1,18 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import Image from "next/image";
 import { Product } from "../lib/types";
 import { Button } from "@/components/ui/button";
 import { productNotAvailable } from "@/app/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import {  ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useCartStore } from "../store/useCartStore";
 import { useRouter } from "next/navigation";
+import { PiContactlessPayment } from "react-icons/pi";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 interface ProductDetailModalProps {
   product: Product;
@@ -42,40 +40,42 @@ export default function ProductDetailModal({
   const { toast } = useToast();
 
   const handleProceedToCheckout = () => {
-  if (!selectedSize && product.size.length > 0) {
-    toast({
-      title: "Please select a size",
-      description: "Size selection is required",
-      variant: "destructive",
-    });
-    return;
-  }
-  if (!selectedColor && product.color.length > 0) {
-    toast({
-      title: "Please select a color",
-      description: "Color selection is required",
-      variant: "destructive",
-    });
-    return;
-  }
+    if (!selectedSize && product.size.length > 0) {
+      toast({
+        title: "Please select a size",
+        description: "Size selection is required",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!selectedColor && product.color.length > 0) {
+      toast({
+        title: "Please select a color",
+        description: "Color selection is required",
+        variant: "destructive",
+      });
+      return;
+    }
 
-  // Store selected product for checkout without affecting cart
-  setCheckoutProducts([{
-    ...product,
-    quantity,
-    selectedColor,
-    selectedSize,
-  }]);
+    // Store selected product for checkout without affecting cart
+    setCheckoutProducts([
+      {
+        ...product,
+        quantity,
+        selectedColor,
+        selectedSize,
+      },
+    ]);
 
-  // Redirect to shipping address page
-  router.push(`order/shipping-address`);
-};
+    // Redirect to shipping address page
+    router.push(`order/shipping-address`);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 max-h-[90vh]">
-          <div className="relative bg-gray-50/50 p-3 md:p-4">
+      <DialogContent className="max-w-6xl bg-gray-50 p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2  max-h-[90vh]">
+          <div className="relative bg-gray-50/50 ">
             <div className="h-full flex flex-col">
               <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-white mb-3">
                 <Image
@@ -91,7 +91,7 @@ export default function ProductDetailModal({
                   priority
                 />
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+              <div className="flex gap-4 border border-gray-50 bg-white rounded-xl p-1 overflow-x-auto pb-1 scrollbar-hide">
                 {allImages.map((image, index) => (
                   <button
                     key={index}
@@ -103,11 +103,9 @@ export default function ProductDetailModal({
                     }`}
                   >
                     <Image
-                     src={
-                      image.startsWith("http")
-                        ? image
-                        : productNotAvailable
-                    }
+                      src={
+                        image.startsWith("http") ? image : productNotAvailable
+                      }
                       alt={`${product.name} ${index + 1}`}
                       fill
                       className="object-cover"
@@ -119,8 +117,8 @@ export default function ProductDetailModal({
             </div>
           </div>
 
-          <div className="flex flex-col max-h-[90vh] p-2 bg-gray-50/50">
-            <div className="flex-1 overflow-y-auto p-2 md:px-4">
+          <div className="flex flex-col max-h-[90vh] p-2 ">
+            <div className="flex-1 overflow-y-auto p-2 md:px-6">
               <div className="space-y-3 md:space-y-4">
                 <div>
                   <DialogTitle className="text-lg border-b border-gray-100 text-2xl font-bold text-gray-900 pb-3">
@@ -146,23 +144,23 @@ export default function ProductDetailModal({
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-xl md:text-2xl font-bold text-gray-900">
-                      ${discountedPrice.toFixed(2)}
-                    </span>
+                  <div className="flex flex-col items-baseline gap-1.5">
                     {product.discount && (
-                      <>
-                        <span className="text-sm md:text-base text-gray-500 line-through">
+                      <div className="flex items-center gap-1.5">
+                        <div className="text-sm md:text-base text-gray-500 line-through">
                           ${product.price.toFixed(2)}
-                        </span>
+                        </div>
                         <Badge
                           variant="default"
                           className="ml-1.5 bg-red-500 text-white text-xs shadow-nonne px-1.5 pt-0.5"
                         >
                           {product.discount}% OFF
                         </Badge>
-                      </>
+                      </div>
                     )}
+                    <div className="text-2xl md:text-3xl font-semibold text-gray-900">
+                      ${discountedPrice.toFixed(2)}
+                    </div>
                   </div>
                   {/* <p className="text-xs md:text-sm text-gray-500">
                     {product.stockQuantity > 0 ? (
@@ -186,19 +184,19 @@ export default function ProductDetailModal({
                       <h3 className="text-xs md:text-sm font-medium text-gray-900 mb-1.5">
                         Color
                       </h3>
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-3">
                         {product.color.map((color) => (
                           <button
                             key={color}
                             onClick={() => setSelectedColor(color)}
                             className={`relative px-2 py-1.5 rounded-md border transition-all flex items-center gap-1.5 text-xs md:text-sm ${
                               selectedColor === color
-                                ? "border-primary bg-primary/5 text-primary"
+                                ? "border- bg-primary/10 text-primary"
                                 : "border-gray-200 hover:border-gray-300"
                             }`}
                           >
                             <div
-                              className="w-3 h-3 rounded-full border border-gray-200"
+                              className="w-4 h-3 rounded"
                               style={{ backgroundColor: color }}
                             />
                             <span className="capitalize">{color}</span>
@@ -261,33 +259,9 @@ export default function ProductDetailModal({
                 </div>
               </div>
             </div>
-            <div className="border-t border-t-gray-100 bg-white p-3 md:p-4">
+            <div className="border-t border-t-gray-100 px-6">
               <div className="flex flex-col gap-2 md:gap-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-xs md:text-sm text-gray-500">
-                        Total:
-                      </span>
-                      <span className="text-lg md:text-xl font-bold text-gray-900">
-                        ${(discountedPrice * quantity).toFixed(2)}
-                      </span>
-                    </div>
-                    {product.discount && (
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs md:text-sm text-gray-500">
-                          You save:
-                        </span>
-                        <span className="text-xs md:text-sm font-medium text-green-600">
-                          $
-                          {(
-                            (product.price - discountedPrice) *
-                            quantity
-                          ).toFixed(2)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
                   {/* <Button
                     variant="outline"
                     size="icon"
@@ -296,12 +270,35 @@ export default function ProductDetailModal({
                     <Heart className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   </Button> */}
                 </div>
+                <div className="flex items-center justify-between w-full gap-2 md:gap-3">
+                  <div className="flex items-center  gap-1.5">
+                    <span className="text-xs md:text-sm text-gray-500">
+                      Total:
+                    </span>
+                    <span className="text-lg md:text-xl font-bold text-gray-900">
+                      ${(discountedPrice * quantity).toFixed(2)}
+                    </span>
+                  </div>
+                  {product.discount && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs md:text-sm text-gray-500">
+                        You save:
+                      </span>
+                      <span className="text-xs md:text-sm font-medium text-green-600">
+                        $
+                        {((product.price - discountedPrice) * quantity).toFixed(
+                          2
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <Button
                   onClick={handleProceedToCheckout}
                   className="w-full text-xs md:text-sm h-9 md:h-10"
                   disabled={product.stockQuantity === 0}
                 >
-                  <ShoppingCart className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5" />
+                  <IoBagCheckOutline className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5" />
                   Proceed to Checkout
                 </Button>
               </div>
