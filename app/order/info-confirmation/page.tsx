@@ -85,11 +85,11 @@ const CheckoutPage = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row w-full mx-auto">
-        <div className="basis-1/2 md:basis-3/4 py-16 px-8 md:px-16">
+        <div className="basis-1/2 md:basis-3/4 py-12 px-8 md:px-14">
           {checkoutProducts.map((product) => (
             <div
               key={product.id}
-              className="flex items-center space-x-4 border-b pb-4"
+              className="flex items-center space-x-4 border-b py-4"
             >
               <img
                 src={product.mainImage}
@@ -126,7 +126,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <div className="basis-1/2  md:basis-1/4 flex h-[89vh] flex-col justify-between bg-white h-full p-6 rounded-lg">
+        <div className="basis-1/2  md:basis-1/4 flex h-[88vh] flex-col justify-between bg-white h-full p-6 rounded-lg">
           <div className="mb-8 mt-4">
             <h2 className="font-semibold text-lg border-b mb-3 border-gray-100 py-2">
               Ship to
