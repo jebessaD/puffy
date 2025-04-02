@@ -70,11 +70,11 @@ const ProductForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className=" bg-white rounded-2xl bg-white p-4"
+      className=" bg-white rounded-2xl p-4"
     >
       <DevTool control={control} />
 
-      <div className="grid grid-cols-2 gap-4 ">
+      <div className="@container grid sm:grid-cols-2 gap-4 ">
         <div className="bg-gray-50 rounded-xl p-6">
           {" "}
           <ProductInfoSection
@@ -83,7 +83,6 @@ const ProductForm = () => {
             watch={watch}
           />
           <ProductOptionsSection
-            control={control}
             setValue={setValue}
             watch={watch}
             trigger={trigger}

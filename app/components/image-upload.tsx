@@ -3,7 +3,6 @@
 import { ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import { useImageUpload } from "../hooks/useImageUpload";
-import { Button } from "@/components/ui/button";
 import { IoCloudUpload } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 
@@ -77,7 +76,7 @@ export function ImageUpload({
         {!value && !isUploading && (
           <div 
             onClick={() => inputRef.current?.click()}
-            className="flex aspect-square w-full h-[150px] bg-white rounded-lg p-4 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 transition-all hover:bg-gray-50/80 hover:border-gray-300"
+            className="flex aspect-square w-full h-[150px] bg-white rounded-lg p-4 cursor-pointer flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-200 transition-all hover:bg-gray-50/80 hover:border-gray-300"
           >
             <IoCloudUpload className="h-10 w-10 text-gray-400" />
             <p className="text-sm font-medium text-gray-600">Click to upload</p>
@@ -98,7 +97,7 @@ export function ImageUpload({
       {isUploading && (
         <div className=" items-center gap-2 h-[150px]  py-auto">
           <div className="h-2 w-full my-auto flex-1 overflow-hidden rounded-full bg-gray-100">
-            <div className="h-full w-1/2 h-2 animate-pulse rounded-full bg-black"></div>
+            <div className="h-full w-1/2 animate-pulse rounded-full bg-black"></div>
           </div>
           <div className="text-sm text-gray-500">Uploading...</div>
         </div>
