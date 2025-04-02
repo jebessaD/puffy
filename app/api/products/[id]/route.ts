@@ -49,7 +49,7 @@ export async function PATCH(
     const product = await prisma.product.update({
       where: { id: numericId },
       data: {
-        deleteStatus: true,
+        isDeleted: true,
       },
     });
 

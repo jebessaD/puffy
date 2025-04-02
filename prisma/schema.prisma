@@ -25,7 +25,7 @@ model Product {
   updatedAt        DateTime    @updatedAt
   orderItems       OrderItem[]
   reviews          Review[]
-  deleteStatus     Boolean?    @default(false)
+  isDeleted        Boolean     @default(false)
 }
 
 model Review {

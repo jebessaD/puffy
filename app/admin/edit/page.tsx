@@ -61,12 +61,7 @@ export default function EditPage() {
         ) : (
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
             {products.map((product: Product) => (
-                product.deleteStatus ||
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  mutate={mutate}
-                />
+              <ProductCard key={product.id} product={product} mutate={mutate} />
             ))}
           </div>
         )}
