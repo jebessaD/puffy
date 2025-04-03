@@ -71,16 +71,9 @@ export default function Home() {
         )}
         {products.length > 0 && (
           <div className="grid grid-cols-2 gap-2 md:gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
-            {products.map(
-              (product: Product) =>
-                product.deleteStatus || (
-                  <ProductCard
-                    mutate={mutate}
-                    key={product.id}
-                    product={product}
-                  />
-                )
-            )}
+            {products.map((product: Product) => (
+              <ProductCard mutate={mutate} key={product.id} product={product} />
+            ))}
           </div>
         )}
       </div>
