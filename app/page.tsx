@@ -76,7 +76,9 @@ export default function HomePage() {
       </motion.div>
 
       <div className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold text-center mb-20">New Arrivals</h2>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-20 ">
+          New Arrivals
+        </h2>
         {isLoading && (
           <div className="flex justify-center py-12">
             <p className="text-gray-600">
@@ -84,7 +86,7 @@ export default function HomePage() {
             </p>
           </div>
         )}
-        <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 ">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 ">
           {products.slice(0, 3).map((product: Product) => (
             <ProductCard key={product.id} product={product} mutate={mutate} />
           ))}
@@ -104,8 +106,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      <h2 className="text-3xl font-bold text-center my-4">Our services</h2>
-      <div className="flex justify-between w-[85%] mx-auto px-4 py-6 ">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center my-4">
+        Our services
+      </h2>
+      <div className="flex justify-between md:w-[85%] mx-auto px-4 py-6 ">
         <div className="flex-1 flex justify-center flex-col">
           {" "}
           <Image
@@ -113,10 +117,10 @@ export default function HomePage() {
             alt="Luxury shopping scene"
             width={100}
             height={100}
-            className="mix-blend-multiply mx-auto"
+            className="mix-blend-multiply mx-auto w-20 md:w-auto"
             priority
           />
-          <p className="mx-auto">Fast Shipping</p>
+          <p className="mx-auto text-xs md:text-base text-center">Fast Shipping</p>
         </div>
 
         <div className="flex-1 flex justify-center flex-col">
@@ -124,24 +128,26 @@ export default function HomePage() {
           <Image
             src="/image/secured.jpg"
             alt="Luxury shopping scene"
-            className="mix-blend-multiply mx-auto"
+            className="mix-blend-multiply mx-auto w-20 md:w-auto"
             width={100}
             height={100}
             priority
           />
-          <p className="mx-auto">Transaction protection</p>
+          <p className="mx-auto text-xs md:text-base text-center">Transaction protection</p>
         </div>
         <div className="flex-1 flex justify-center flex-col">
           {" "}
           <Image
             src="/image/safety.jpg"
             alt="Luxury shopping scene"
-            className="mix-blend-multiply mx-auto"
+            className="mix-blend-multiply mx-auto w-16 md:w-auto"
             width={100}
             height={100}
             priority
           />
-          <p className="mx-auto">Reliable after-sale services</p>
+          <p className="mx-auto text-xs md:text-base text-center">
+            Reliable after-sale services
+          </p>
         </div>
       </div>
     </div>
