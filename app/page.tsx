@@ -81,9 +81,7 @@ export default function HomePage() {
         </h2>
         {isLoading && (
           <div className="flex justify-center py-12">
-            <p className="text-gray-600">
-              <Loading />
-            </p>
+            <Loading />
           </div>
         )}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 ">
@@ -120,7 +118,9 @@ export default function HomePage() {
             className="mix-blend-multiply mx-auto w-20 md:w-auto"
             priority
           />
-          <p className="mx-auto text-xs md:text-base text-center">Fast Shipping</p>
+          <p className="mx-auto text-xs md:text-base text-center">
+            Fast Shipping
+          </p>
         </div>
 
         <div className="flex-1 flex justify-center flex-col">
@@ -133,7 +133,9 @@ export default function HomePage() {
             height={100}
             priority
           />
-          <p className="mx-auto text-xs md:text-base text-center">Transaction protection</p>
+          <p className="mx-auto text-xs md:text-base text-center">
+            Transaction protection
+          </p>
         </div>
         <div className="flex-1 flex justify-center flex-col">
           {" "}

@@ -1,8 +1,9 @@
 "use client";
 
-import { MdAddToPhotos, MdBorderColor } from "react-icons/md";
-import { RiFileEditFill } from "react-icons/ri";
 import SidebarLink from "./sidebarLink";
+import { SiReaddotcv } from "react-icons/si";
+import { RiApps2AddLine } from "react-icons/ri";
+import { TbEdit } from "react-icons/tb";
 
 export default function AdminLayout({
   children,
@@ -13,17 +14,17 @@ export default function AdminLayout({
     {
       href: "/admin/product",
       label: "Add Products",
-      icon: <MdAddToPhotos size={28} />,
+      icon: <RiApps2AddLine size={24} />,
     },
     {
       href: "/admin/edit",
       label: "Edit Products",
-      icon: <RiFileEditFill size={28} />,
+      icon: <TbEdit size={24} />,
     },
     {
       href: "/admin/order",
       label: "Products Order",
-      icon: <MdBorderColor size={28} />,
+      icon: <SiReaddotcv size={24} />,
     },
   ];
 

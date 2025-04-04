@@ -73,8 +73,8 @@ export default function ProductDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl bg-gray-50 p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2  max-h-[90vh]">
+      <DialogContent className="max-w-6xl bg-gray-50 p-4 md:max-h-[90vh] max-h-[80vh] overflow-scroll">
+        <div className="grid grid-cols-1 md:grid-cols-2 ">
           <div className="relative bg-gray-50/50 ">
             <div className="h-full flex flex-col">
               <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-white mb-3">
@@ -145,7 +145,7 @@ export default function ProductDetailModal({
 
                 <div className="space-y-1.5">
                   <div className="flex flex-col items-baseline gap-1.5">
-                    {product.discount && (
+                    {product.discount ? (
                       <div className="flex items-center gap-1.5">
                         <div className="text-sm md:text-base text-gray-500 line-through">
                           ${product.price.toFixed(2)}
@@ -157,6 +157,8 @@ export default function ProductDetailModal({
                           {product.discount}% OFF
                         </Badge>
                       </div>
+                    ) : (
+                      <></>
                     )}
                     <div className="text-2xl md:text-3xl font-semibold text-gray-900">
                       ${discountedPrice.toFixed(2)}
@@ -191,7 +193,7 @@ export default function ProductDetailModal({
                             onClick={() => setSelectedColor(color)}
                             className={`relative px-2 py-1.5 rounded-md border transition-all flex items-center gap-1.5 text-xs md:text-sm ${
                               selectedColor === color
-                                ? "border- bg-primary/10 text-primary"
+                                ? "bg-primary/10 text-primary"
                                 : "border-gray-200 hover:border-gray-300"
                             }`}
                           >
@@ -217,7 +219,7 @@ export default function ProductDetailModal({
                             onClick={() => setSelectedSize(size)}
                             className={`px-2 py-1.5 rounded-md border transition-all text-xs md:text-sm ${
                               selectedSize === size
-                                ? "border-primary bg-primary/5 text-primary"
+                                ? " bg-primary/5 text-primary"
                                 : "border-gray-200 hover:border-gray-300"
                             }`}
                           >
@@ -259,7 +261,7 @@ export default function ProductDetailModal({
                 </div>
               </div>
             </div>
-            <div className="border-t border-t-gray-100 px-6">
+            <div className="border-t border-t-gray-100 ">
               <div className="flex flex-col gap-2 md:gap-3">
                 <div className="flex items-center justify-between">
                   {/* <Button
@@ -279,7 +281,7 @@ export default function ProductDetailModal({
                       ${(discountedPrice * quantity).toFixed(2)}
                     </span>
                   </div>
-                  {product.discount && (
+                  {product.discount ? (
                     <div className="flex items-center gap-1.5">
                       <span className="text-xs md:text-sm text-gray-500">
                         You save:
@@ -291,6 +293,8 @@ export default function ProductDetailModal({
                         )}
                       </span>
                     </div>
+                  ) : (
+                    <></>
                   )}
                 </div>
                 <Button

@@ -13,6 +13,7 @@ import EditProductDialog from "@/app/admin/edit/EditProductDialog";
 import { DeleteProductDialog } from "../admin/delete/DeleteProductDialog";
 import { MutatorCallback } from "swr";
 import { LiaShippingFastSolid } from "react-icons/lia";
+import { Button } from "@/components/ui/button";
 
 interface ProductCardProps {
   product: Product;
@@ -26,7 +27,6 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
   const pathname = usePathname();
   const isAdminEdit = pathname.startsWith("/admin/edit");
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-
 
   const isInCart = items.some((item) => item.product.id === product.id);
 
@@ -91,10 +91,10 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
         {/* Content Container with Background - Move transform to this div */}
         <div className="relative flex flex-col bg-white transform transition-transform duration-300 lg:group-hover:-translate-y-[56px]">
           {/* Product Info - Remove transform from here */}
-          <div className="p-2 md:p-4 relative h-48 border-t border-slate-50 lg:h-full lg:pb-4 lg:pt-4">
+          <div className="p-2  md:p-4 relative md:h-48 border-t border-slate-50 lg:h-full lg:pb-4 lg:pt-4">
             {/* Main Content */}
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex sm:flex-col justify-between">
                 <h3 className="text-lg text-gray-900 mb-1">{product.name}</h3>
                 {/* Stock Status */}
                 {/* <div>
@@ -108,10 +108,10 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
 
               {/* Price */}
               <div className="">
-                <div className="flex w-full items-end justify-between gap-2">
-                  <div className="">
+                <div className="flex w-full  items-end justify-between gap-2">
+                  <div className=" w-full md:w-auto">
                     {product.discount ? (
-                      <div className="flex text-xs items-center gap-1 sm:gap-2">
+                      <div className="flex text-xs items-center justify-between gap-1 sm:gap-2">
                         <span className="text-gray-500 line-through">
                           ${product?.price?.toFixed(2)}
                         </span>
@@ -123,18 +123,22 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
                       <div className="h-4"></div>
                       // <></>
                     )}
-                    <span className="text-xl font-medium text-gray-900 flex items-end">
-                      <span>{Math.floor(discountedPrice)}</span>
 
+                    <span className="text-base md:text-xl font-medium text-gray-900 flex items-end">
+                      <span>{Math.floor(discountedPrice)}</span>
                       <span className="text-sm mb-0.5 font-normal text-gray-700">
                         .{discountedPrice.toFixed(2).split(".")[1]}
-                      </span>
+                      </span>{" "}
                     </span>
+                    <div className="flex md:hidden items-center justify-center space-x-2 p-1 bg-green-100 text-green-600 my-2 gap-2">
+                      <LiaShippingFastSolid />{" "}
+                      <span className="text-xs">Free Shipping</span>{" "}
+                    </div>
                   </div>
-                  <p className="text-sm bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 flex">
+                  <div className="text-sm  hidden bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex">
                     <LiaShippingFastSolid />{" "}
                     <span className="text-xs">Free Shipping</span>{" "}
-                  </p>
+                  </div>
                 </div>
 
                 {/* Rating */}
@@ -184,14 +188,15 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
                 <DeleteProductDialog productId={product.id} mutate={mutate} />
               </div>
             ) : (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCartClick();
-                }}
-                disabled={product.stockQuantity === 0}
-                className={`
-                absolute left-4 right-4 px-4 py-2 rounded-sm mb-4 mt-auto font-medium
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCartClick();
+                  }}
+                  disabled={product.stockQuantity === 0}
+                  className={`
+                absolute hidden md:block left-4 right-4 px-4 py-2 rounded-sm mb-4 mt-auto font-medium
                 transform transition-all duration-300
                 ${
                   isInCart
@@ -202,12 +207,31 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
                 translate-y-4 lg:translate-y-2 lg:group-hover:translate-y-4
                 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed
               `}
-              >
-                <div className="flex items-center md:text-base text-sm justify-center gap-2">
-                  <ShoppingCart className="h-3 md:h-5 w-3 md:w-5" />
+                >
+                  <div className="flex items-center md:text-base text-xs justify-center gap-2">
+                    <ShoppingCart className="h-3 md:h-5 w-3 md:w-5" />
+                    {isInCart ? "Remove" : "Add to Cart"}
+                  </div>
+                </button>
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCartClick();
+                  }}
+                  disabled={product.stockQuantity === 0}
+                  className={` md:hidden mt-2 rounded-sm w-full
+                ${
+                  isInCart
+                    ? "bg-red-100 text-red-600 hover:bg-red-200"
+                    : "bg-black text-white hover:bg-gray-800"
+                }
+               
+              `}
+                >
+                  {" "}
                   {isInCart ? "Remove" : "Add to Cart"}
-                </div>
-              </button>
+                </Button>
+              </>
             )}
           </div>
         </div>
