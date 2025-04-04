@@ -98,7 +98,6 @@ export default function EditProductDialog({
                     watch={watch}
                   />
                   <ProductOptionsSection
-                    control={control}
                     setValue={setValue}
                     watch={watch}
                     trigger={trigger}

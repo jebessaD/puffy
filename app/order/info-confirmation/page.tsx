@@ -77,7 +77,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="flex">
-      <div className="fixed flex-col sm:flex-row bg-white border-b border-gray-100 left-0 right-0 top-0 flex items-center justify-between sm:p-4 p-2 bg-gray-50 z-20">
+      <div className="fixed flex-col sm:flex-row bg-white border-b border-gray-100 left-0 right-0 top-0 flex items-center justify-between sm:p-4 p-2 z-20">
         <Button variant="outline" onClick={() => window.history.back()}>
           Back
         </Button>
@@ -126,7 +126,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <div className="basis-1/2  md:basis-1/4 flex h-[88vh] flex-col justify-between bg-white h-full p-6 rounded-lg">
+        <div className="basis-1/2  md:basis-1/4 flex h-[88vh] flex-col justify-between bg-white p-6 rounded-lg">
           <div className="mb-8 mt-4">
             <h2 className="font-semibold text-lg border-b mb-3 border-gray-100 py-2">
               Ship to

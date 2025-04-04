@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldErrors, UseFormGetValues, UseFormWatch } from "react-hook-form";
+import { UseFormRegister, FieldErrors, UseFormWatch } from "react-hook-form";
 import { FormValues } from "@/app/lib/data.type";
 
 interface ProductInfoSectionProps {
@@ -23,8 +23,8 @@ export default function ProductInfoSection({
   const netPrice = price - (price * discount) / 100;
 
   return (
-    <div className="grid grid-cols-1  lg:grid-cols-2 gap-6">
-      <div className={`${inputContent} lg:col-span-2`}>
+    <div className="grid grid-cols-1  @lg:grid-cols-2 gap-6">
+      <div className={`${inputContent} @lg:col-span-2`}>
         <label className={labelCSS}>Product Name</label>
         <input
           {...register("name")}
@@ -36,7 +36,7 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={`${inputContent} lg:col-span-2`}>
+      <div className={`${inputContent} @lg:col-span-2`}>
         <label className={labelCSS}>Description</label>
         <textarea
           {...register("description")}
@@ -74,7 +74,7 @@ export default function ProductInfoSection({
         )}
       </div>
 
-      <div className={`${inputContent} lg:col-span-2 hidden`}>
+      <div className={`${inputContent} @lg:col-span-2 hidden`}>
         <label className={labelCSS}>Stock Quantity</label>
         <input
           {...register("stockQuantity")}

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Control,
   UseFormSetValue,
   UseFormWatch,
   UseFormTrigger,
@@ -13,7 +12,6 @@ import { IoAdd } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 
 interface ProductOptionsSectionProps {
-  control: Control<FormValues>;
   setValue: UseFormSetValue<FormValues>;
   watch: UseFormWatch<FormValues>;
   trigger: UseFormTrigger<FormValues>;
@@ -28,7 +26,6 @@ const iterableSpanCSS =
   "group flex items-center bg-white border border-gray-200 px-3 pr-1 py-1 rounded-full text-gray-700 text-sm transition-all hover:border-gray-300";
 
 const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
-  control,
   setValue,
   watch,
   trigger,
