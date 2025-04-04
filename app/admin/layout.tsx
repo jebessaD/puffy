@@ -39,7 +39,7 @@ export default function AdminLayout({
           />
         ))}
       </div>
-      <div className="ml-[61px] md:ml-56">{children}</div>
+      <div className="ml-[61px] md:ml-56 w-full">{children}</div>
     </div>
   );
 }

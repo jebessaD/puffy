@@ -70,7 +70,7 @@ const ProductForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className=" bg-white p-4"
+      className=" bg-white p-4 h-screen"
     >
       <DevTool control={control} />
 
