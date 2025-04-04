@@ -49,7 +49,6 @@ const ShippingAddressForm: React.FC = () => {
       if (isDefault) {
         localStorage.setItem("defaultShippingAddress", JSON.stringify(data));
       }
-      console.log("checkout products:", checkoutProducts);
       router.push("/order/info-confirmation");
     } finally {
       setLoading(false);

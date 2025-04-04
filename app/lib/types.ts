@@ -15,7 +15,7 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   reviews?: Review[];
-  isDeleted?: boolean;
+  isDeleted: boolean;
 }
 
 export interface Review {

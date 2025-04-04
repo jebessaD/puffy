@@ -63,7 +63,7 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
 
     // Trigger validation after removing
     await trigger("size");
-    console.log(size);
+
   };
 
   const handleRemoveAdditionalColor = async (index: number) => {
@@ -73,7 +73,6 @@ const ProductOptionsSection: React.FC<ProductOptionsSectionProps> = ({
 
     // Trigger validation after removing
     await trigger("color");
-    console.log(color);
   };
 
   return (
