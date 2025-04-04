@@ -27,7 +27,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
   const isAdminEdit = pathname.startsWith("/admin/edit");
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
-  // Check if product is in cart
+
   const isInCart = items.some((item) => item.product.id === product.id);
 
   // Default image URL if mainImage is not provided or invalid

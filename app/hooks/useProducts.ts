@@ -9,7 +9,6 @@ interface ProductFilters {
   sortBy?: string;
   order?: "asc" | "desc";
   search?: string;
-  isDeleted?: boolean;
 }
 
 const useProducts = (filters?: ProductFilters) => {

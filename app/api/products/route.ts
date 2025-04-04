@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";;
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
@@ -17,7 +17,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const sortBy = searchParams.get("sortBy") || "createdAt";
     const order = searchParams.get("order") === "asc" ? "asc" : "desc";
     const search = searchParams.get("search") || "";
-    const isDeleted = searchParams.get("isDeleted") === "false";
 
     const where = {
       ...(category && { category }),
@@ -32,11 +31,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             ],
           }
         : {}),
-      isDeleted: false
     };
 
     const products = await prisma.product.findMany({
-      where,
+      where: { ...where, isDeleted: false },
       orderBy: { [sortBy]: order },
       include: {
         reviews: {
