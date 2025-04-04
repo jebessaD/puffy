@@ -19,7 +19,7 @@ import Link from "next/link";
 export default function Navbar() {
   const hoverEffect = "hover:scale-125 transition duration-500";
   return (
-    <div className="flex bg-white border-b border-slate-200 justify-between items-center px-4 sm:px-6 lg:px-16 text-gray-800">
+    <div className="z-10 sticky top-0 flex bg-white border-b border-slate-200 justify-between items-center px-4 sm:px-6 lg:px-16 text-gray-800">
       <div className="basis-1/3 flex items-center gap-6">
         <div className="sm:hidden flex items-center gap-2">
           <Sheet>
@@ -108,6 +108,5 @@ export default function Navbar() {
         <Cart />
       </div>
     </div>
-
   );
 }
