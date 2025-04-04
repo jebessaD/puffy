@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import { GoMail } from "react-icons/go";
 import { BiLogoInstagram } from "react-icons/bi";
@@ -17,12 +18,17 @@ import {
 import Link from "next/link";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
   const hoverEffect = "hover:scale-125 transition duration-500";
   return (
     <div className="z-10 sticky top-0 flex bg-white border-b border-slate-200 justify-between items-center px-4 sm:px-6 lg:px-16 text-gray-800">
       <div className="basis-1/3 flex items-center gap-6">
         <div className="sm:hidden flex items-center gap-2">
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <RxHamburgerMenu className="text-3xl cursor-pointer" />
             </SheetTrigger>
@@ -41,6 +47,7 @@ export default function Navbar() {
                   <React.Fragment key={index}>
                     <Link
                       href={item.href}
+                      onClick={handleLinkClick}
                       className="flex justify-between border-b border-b-gray-100 px-3 py-2 items-center text-gray-800"
                     >
                       <span className="text-nowrap">{item.name}</span>
@@ -51,7 +58,10 @@ export default function Navbar() {
               </div>
               <hr className="-mx-6" />
               <div className="-mx-6 flex justify-around">
-                <a href="mailto:OyH5o@example.com" target="_blank">
+                <a
+                  href={`mailto:${process.env.EMAIL_USERNAME}`}
+                  target="_blank"
+                >
                   <GoMail size={25} />
                 </a>
                 <a

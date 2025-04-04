@@ -13,7 +13,7 @@ export default function SidebarLink({ href, label, icon }: SidebarLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  const activeLinkCSS = "bg-gray-300";
+  const activeLinkCSS = "bg-gray-200";
   const baseLinkCSS = "flex items-center md:gap-2 md:px-2 md:py-2 md:rounded px-4 py-2";
   const iconCSS = "text-gray-700";
   const spanCSS = "max-md:hidden text-nowrap text-neutral-700";
