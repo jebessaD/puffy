@@ -76,15 +76,15 @@ export default function Cart() {
     <Sheet>
       <SheetTrigger asChild>
         <div className="relative">
-          <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 text-3xl" />
-          {mounted && totalItems() > 0 && (
+          <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 text-3xl " />
+          {totalItems() > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               {totalItems()}
             </span>
           )}
         </div>
       </SheetTrigger>
-      <SheetContent className="max-sm:px-3 text-gray-800 max-sm:w-full flex flex-col justify-between">
+      <SheetContent className="max-sm:px-3 text-gray-800 max-sm:w-4/5 flex flex-col justify-between">
         <SheetHeader>
           <SheetTitle className="text-center">Shopping Cart</SheetTitle>
           {items.length === 0 ? (
