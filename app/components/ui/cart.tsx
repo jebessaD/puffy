@@ -69,6 +69,9 @@ export default function Cart() {
     router.push("/order/shipping-address");
   };
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
