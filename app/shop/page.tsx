@@ -31,9 +31,9 @@ export default function Home() {
       {/* Hero Section */}
       <div className=" mb-8 text-center bg-white py-12">
         <div className="container pt-8 mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900">Our Products</h1>
+          <h1 className="text-4xl font-bold text-gray-900">Products</h1>
           <p className="mt-2 text-gray-600 mb-8">
-            Discover our collection of premium items
+            Essentials for everyday elevation
           </p>
           <div className="p-4 pb-0 rounded-md">
             {" "}
