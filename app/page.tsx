@@ -22,7 +22,7 @@ export default function HomePage() {
         {/* Background Image */}
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/image/image3.jpg"
+            src="/image/image3.png"
             alt="Luxury shopping scene"
             layout="fill"
             objectFit="cover"
@@ -54,7 +54,7 @@ export default function HomePage() {
           >
             <p className="self-end">
               {" "}
-              Luxury redefined - Indulge in softness and style{" "}
+              Vibe high, stay fly
             </p>{" "}
             <span>
               <PiQuotesDuotone className="mx-4 text-gray-200 text-xl md:text-3xl lg:text-5xl" />

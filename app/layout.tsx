@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Puffy - Your One-Stop Shop",
+  title: "Puffy - Vibe high, stay fly",
   description: "Discover our collection of premium products",
 };
 
