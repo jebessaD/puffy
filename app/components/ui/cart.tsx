@@ -69,12 +69,15 @@ export default function Cart() {
     router.push("/order/shipping-address");
   };
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
         <div className="relative">
           <LiaShoppingBagSolid className="hover:scale-125 transition duration-500 text-3xl" />
-          {totalItems() > 0 && (
+          {mounted && totalItems() > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               {totalItems()}
             </span>
