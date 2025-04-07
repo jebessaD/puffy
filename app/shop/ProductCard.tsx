@@ -95,7 +95,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
             {/* Main Content */}
             <div className="space-y-2">
               <div className="flex sm:flex-col justify-between">
-                <h3 className="text-lg text-gray-900 mb-1">{product.name}</h3>
+                <h3 className="text-lg text-gray-900 ">{product.name}</h3>
                 {/* Stock Status */}
                 {/* <div>
                   {product.stockQuantity > 0 ? (
