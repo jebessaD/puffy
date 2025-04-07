@@ -43,7 +43,7 @@ export default function Home() {
       </div>
 
       {/* Product Grid */}
-      <div className="container relative py-8 mx-auto ">
+      <div className="container relative py-8 mx-auto min-h-screen">
         {isLoading ? (
           <div className="bg-white bg-opacity-10 absolute mx-auto w-full z-10  flex-col space-y-2  justify-center flex min-h-[400px]  items-center ">
             <Loading />

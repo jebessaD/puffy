@@ -70,9 +70,6 @@ export default function Navbar() {
                 >
                   <BiLogoInstagram size={25} />
                 </a>
-                <Link href="/account">
-                  <GoPerson size={25} />
-                </Link>
               </div>
             </SheetContent>
           </Sheet>
@@ -109,18 +106,17 @@ export default function Navbar() {
 
       <div className="basis-1/3 flex space-x-2 sm:max-lg:space-x-6 lg:space-x-8 justify-end items-center">
         <div className=" hidden sm:flex justify-end space-x-2 sm:max-lg:space-x-6 lg:space-x-8">
-          <a href="mailto:OyH5o@example.com" target="_blank">
+          <a href="mailto:getpuffyroll@gmail.com" target="_blank">
             <GoMail size={26} className={`${hoverEffect}`} />
           </a>
-          <a href="https://www.instagram.com/puffyboutique/" target="_blank">
+          <a href="https://www.instagram.com/puffyroll" target="_blank">
             <BiLogoInstagram size={26} className={`${hoverEffect}`} />
           </a>
-          <Link href="/account">
-            <GoPerson size={26} className={`${hoverEffect}`} />
-          </Link>
         </div>
-        <div className="ml-auto flex justify-end"> <Cart /></div>
-       
+        <div className="ml-auto flex justify-end">
+          {" "}
+          <Cart />
+        </div>
       </div>
     </div>
   );
