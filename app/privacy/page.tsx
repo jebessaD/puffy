@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="list-disc pl-5 space-y-2 mb-4">
                 <li><strong>Contact Information:</strong> Full name, email address, phone number</li>
-                <li><strong>Shipping Details:</strong> Delivery address, country, postal code</li>
+                <li><strong>Shipping Details:</strong> Delivery address, country, zip code</li>
                 <li><strong>Order Information:</strong> Products purchased, sizes, quantities, order value</li>
                 <li><strong>Device Data:</strong> IP address, browser type, operating system</li>
               </ul>

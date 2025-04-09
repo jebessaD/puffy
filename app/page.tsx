@@ -14,7 +14,7 @@ export default function HomePage() {
   const { products = [], isLoading, isError, mutate } = useProducts({});
 
   return (
-    <div >
+    <div>
       {/* Hero Section (Kept exactly as is) */}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -53,12 +53,15 @@ export default function HomePage() {
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
             className="text-lg flex md:text-2xl items-start text-gray-300 mt-4 max-w-2xl"
           >
-            <p className="self-end">Vibe high, stay fly</p>{" "}
+            <span className="mx-6">
+             
+            </span>
+            <p className="self-end text-center">Vibe high, stay fly</p>{" "}
             <span>
-              <PiQuotesDuotone className="mx-4 text-gray-200 text-xl md:text-3xl lg:text-5xl" />
+              <PiQuotesDuotone className="mx-2 text-gray-200 text-xl md:text-2xl lg:text-4xl" />
             </span>
           </motion.div>
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-12">
             <Link
               className="group relative py-3 px-8 rounded-lg text-white font-black"
               href="/shop"
@@ -102,7 +105,7 @@ export default function HomePage() {
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.2 }}
               >
-                <ProductCard product={product} mutate={mutate} />
+                <ProductCard product={product} mutate={mutate}  isHome={true}/>
               </motion.div>
             ))}
           </div>
@@ -163,8 +166,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-
     </div>
   );
 }
