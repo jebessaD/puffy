@@ -8,7 +8,6 @@ import { useToast } from "@/components/ui/use-toast";
 type LoginFormInputs = {
   email: string;
   password: string;
-  remember?: boolean;
 };
 
 export default function LoginPage() {
@@ -24,12 +23,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   const onSubmit = (data: LoginFormInputs) => {
-    const { email, password, remember } = data;
-
-    // Example logic:
-    if (remember) {
-      localStorage.setItem("rememberedEmail", email);
-    }
+    const { email, password } = data;
 
     // Mock login call
     fetch("/api/login", {
@@ -98,29 +92,10 @@ export default function LoginPage() {
             )}
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                {...register("remember")}
-                className="form-checkbox text-blue-500"
-              />
-              Remember me
-            </label>
-            <a href="#" className="text-gray-600 hover:underline">
-              Forgot password?
-            </a>
-          </div>
-
           <Button type="submit" className="w-full">
             Login
           </Button>
         </form>
-
-        {/* <p className="mt-6 text-center text-sm text-gray-600">
-          Don’t have an account?{' '}
-          <a href="#" className="text-blue-600 hover:underline">Register</a>
-        </p> */}
       </div>
     </div>
   );
