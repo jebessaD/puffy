@@ -25,14 +25,13 @@ export default function LoginPage() {
   const onSubmit = (data: LoginFormInputs) => {
     const { email, password } = data;
 
-    // Mock login call
     fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     }).then((res) => {
       if (res.ok) {
-        router.push("/admin/product");
+        router.push("/admin");
         reset({
           email: "",
           password: "",

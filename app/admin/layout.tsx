@@ -4,6 +4,7 @@ import SidebarLink from "./sidebarLink";
 import { SiReaddotcv } from "react-icons/si";
 import { RiApps2AddLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
+import { BsFileEarmarkBarGraph } from "react-icons/bs";
 
 export default function AdminLayout({
   children,
@@ -11,6 +12,11 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const sidebarLinks = [
+    {
+      href: "/admin",
+      label: "Dashboard",
+      icon: <BsFileEarmarkBarGraph size={24} />,
+    },
     {
       href: "/admin/product",
       label: "Add Products",
@@ -23,7 +29,7 @@ export default function AdminLayout({
     },
     {
       href: "/admin/order",
-      label: "Products Order",
+      label: "Orders",
       icon: <SiReaddotcv size={24} />,
     },
   ];
