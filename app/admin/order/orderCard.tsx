@@ -19,6 +19,7 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
+  console.log(order)
   return (
     <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 overflow-hidden">
       <div className="flex justify-between items-start mb-6">

@@ -36,7 +36,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Create order with items
     const order = await prisma.order.create({
       data: {
         shippingAddressId: shippingAddressRecord.id,
@@ -46,6 +45,8 @@ export async function POST(req: Request) {
         orderItems: {
           create: checkoutProducts.map((product: any) => ({
             productId: product.id,
+            color: product?.selectedColor,
+            size: product?.selectedSize,
             quantity: product.quantity,
             price: product.price * (100 - product.discount || 0) / 100, // Store discounted price
           })),
