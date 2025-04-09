@@ -58,7 +58,7 @@ export default function Page() {
       {orders.length === 0 && !isDelivered ? (
         <p className="text-gray-600">No orders found.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {(isDelivered
             ? orders.filter((order: any) => order.orderStatus !== "DELIVERED")
             : orders
