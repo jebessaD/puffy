@@ -138,7 +138,7 @@ export default function ProductCard({ product, mutate, isHome = false }: Product
                   </div>
                   <div className={`text-sm hn bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex bg-green-100 ${isHome ? "flex":"hidden"} `}>
                     <LiaShippingFastSolid />{" "}
-                    <span className="text-xs text-nowrap">Free Shipping</span>erer{" "}
+                    <span className="text-xs text-nowrap">Free Shipping</span>
                   </div>
                 </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -19,17 +20,21 @@ export default function LoginPage() {
   } = useForm<LoginFormInputs>();
 
   const { toast } = useToast();
-
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data: LoginFormInputs) => {
+  const onSubmit = async (data: LoginFormInputs) => {
     const { email, password } = data;
 
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    }).then((res) => {
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
       if (res.ok) {
         router.push("/admin");
         reset({
@@ -44,9 +49,17 @@ export default function LoginPage() {
           variant: "destructive",
         });
         console.log("this is an error");
-        // Show error
       }
-    });
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -91,8 +104,8 @@ export default function LoginPage() {
             )}
           </div>
 
-          <Button type="submit" className="w-full">
-            Login
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
       </div>
