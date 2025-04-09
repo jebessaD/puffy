@@ -65,7 +65,7 @@ export default function Navbar() {
                   <GoMail size={25} />
                 </a>
                 <a
-                  href="https://www.instagram.com/puffyboutique/"
+                  href="https://www.instagram.com/Getpuffy_"
                   target="_blank"
                 >
                   <BiLogoInstagram size={25} />
@@ -109,7 +109,7 @@ export default function Navbar() {
           <a href="mailto:getpuffyroll@gmail.com" target="_blank">
             <GoMail size={26} className={`${hoverEffect}`} />
           </a>
-          <a href="https://www.instagram.com/puffyroll" target="_blank">
+          <a href="https://www.instagram.com/Getpuffy_" target="_blank">
             <BiLogoInstagram size={26} className={`${hoverEffect}`} />
           </a>
         </div>

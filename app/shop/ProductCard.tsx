@@ -18,9 +18,10 @@ import { Button } from "@/components/ui/button";
 interface ProductCardProps {
   product: Product;
   mutate: MutatorCallback;
+  isHome?: boolean;
 }
 
-export default function ProductCard({ product, mutate }: ProductCardProps) {
+export default function ProductCard({ product, mutate, isHome = false }: ProductCardProps) {
   const { items, removeItem, addItem } = useCartStore();
   const { toast } = useToast();
   const [showModal, setShowModal] = useState(false);
@@ -77,7 +78,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
         onClick={isAdminEdit ? undefined : () => setShowModal(true)}
       >
         {/* Image Container */}
-        <div className="relative bg-white h-32 lg:h-auto lg:aspect-square overflow-hidden">
+        <div className={`relative bg-white   ${isHome? "h-60":"h-32"} lg:h-auto   lg:aspect-square overflow-hidden`}>
           <Image
             src={imageUrl}
             alt={product.name}
@@ -111,7 +112,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
                 <div className="flex w-full  items-end justify-between gap-2">
                   <div className=" w-full md:w-auto">
                     {product.discount ? (
-                      <div className="flex text-xs items-center justify-between gap-1 sm:gap-2">
+                      <div className="flex text-xs items-center md:justify-between gap-1 sm:gap-2">
                         <span className="text-gray-500 line-through">
                           ${product?.price?.toFixed(2)}
                         </span>
@@ -126,18 +127,18 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
 
                     <span className="text-base md:text-xl font-medium text-gray-900 flex items-end">
                       <span>{Math.floor(discountedPrice)}</span>
-                      <span className="text-sm mb-0.5 font-normal text-gray-700">
+                      <span className="text-sm mb-px font-normal text-gray-700">
                         .{discountedPrice.toFixed(2).split(".")[1]}
                       </span>{" "}
                     </span>
-                    <div className="flex md:hidden items-center justify-center space-x-2 p-1 bg-green-100 text-green-600 my-2 gap-2">
+                    <div className={`flex md:hidden ${isHome ? "hidden":""} items-center justify-center space-x-2 p-1 text-green-600 bg-green-100 my-1 gap-2`}>
                       <LiaShippingFastSolid />{" "}
-                      <span className="text-xs">Free Shipping</span>{" "}
+                      <span className="text-xs">Free Shipping</span>
                     </div>
                   </div>
-                  <div className="text-sm  hidden bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex">
+                  <div className={`text-sm hn bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex bg-green-100 ${isHome ? "flex":"hidden"} `}>
                     <LiaShippingFastSolid />{" "}
-                    <span className="text-xs">Free Shipping</span>{" "}
+                    <span className="text-xs text-nowrap">Free Shipping</span>erer{" "}
                   </div>
                 </div>
 
@@ -219,7 +220,7 @@ export default function ProductCard({ product, mutate }: ProductCardProps) {
                     handleCartClick();
                   }}
                   disabled={product.stockQuantity === 0}
-                  className={` md:hidden mt-2 rounded-sm w-full
+                  className={` md:hidden mt-2 rounded w-full
                 ${
                   isInCart
                     ? "bg-red-100 text-red-600 hover:bg-red-200"

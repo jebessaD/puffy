@@ -11,6 +11,7 @@ export default function Footer() {
   const pathname = usePathname();
 
   if (pathname.includes("/admin")) return null;
+  if (pathname.includes("/order")) return null;
 
   return (
     <footer className="bg-gray-950 text-gray-300 py-6 px-4">
@@ -28,7 +29,7 @@ export default function Footer() {
             />
           </Link>
           <div className="flex space-x-4">
-            <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-white">
+            <a href="https://www.instagram.com/Getpuffy_" target='_blank' aria-label="Instagram" className="text-gray-400 hover:text-white">
               <Instagram size={18} />
             </a>
             <a href="mailto:getpuffyroll@gmail.com" aria-label="Email" className="text-gray-400 hover:text-white">

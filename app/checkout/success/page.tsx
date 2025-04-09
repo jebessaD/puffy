@@ -151,7 +151,12 @@ function SuccessContent() {
       <p className="text-gray-600 mb-10">
         Thank you for your purchase! A confirmation has been sent to{" "}
         <span className="font-semibold">{customerEmail}</span>.
+        <br />
+        <span className="text-sm text-gray-500 italic">
+          (If you don't see it soon, please check your spam or junk folder.)
+        </span>
       </p>
+
       <Link
         href="/shop"
         className="bg-black text-white py-3 px-5 rounded hover:bg-gray-900 mt-3"

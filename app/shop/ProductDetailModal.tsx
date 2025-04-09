@@ -71,11 +71,11 @@ export default function ProductDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl bg-gray-50 p-4 max-h-[80dvh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-6xl bg-gray-50 p-4 max-h-[85dvh] overflow-hidden flex flex-col w-[90%] md:w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0">
           {/* Left Column - Images */}
-          <div className="flex flex-col h-full min-h-0">
-            <div className="relative flex-1 min-h-[300px] md:min-h-0 aspect-square rounded-xl bg-white mb-3">
+          <div className="flex flex-col min-h-[300px]">
+            <div className="relative flex-1  md:min-h-0 aspect-square rounded-xl bg-white mb-3">
               <Image
                 src={
                   selectedImage.startsWith("http")
