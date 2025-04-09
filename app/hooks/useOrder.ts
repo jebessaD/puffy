@@ -1,5 +1,6 @@
 import useSWRMutation from "swr/mutation";
-import { post } from "../lib/fetcher";
+import { fetcher, post } from "../lib/fetcher";
+import useSWR from "swr";
 
 export function useSendEmail() {
   const { trigger, isMutating, data, error } = useSWRMutation(
@@ -26,4 +27,22 @@ export function useSendEmail() {
     successMessage: data?.message || "",
     errorMessage: error?.message || "",
   } as UseSendEmailReturn;
+}
+
+export function useStats() {
+  const { data, error, isLoading } = useSWR("/api/admin/stats", fetcher);
+
+
+
+  interface UseStatsReturn {
+    stats: any;
+    isLoading: boolean;
+    errorMessage: string | null;
+  }
+
+  return {
+    stats: data?.success ? data.data : null,
+    isLoading,
+    errorMessage: error ? "Failed to fetch dashboard data" : data?.error || null,
+  } as UseStatsReturn;
 }
