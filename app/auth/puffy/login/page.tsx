@@ -26,7 +26,7 @@ export default function LoginPage() {
     const { email, password } = data;
 
     // Mock login call
-    fetch("/api/login", {
+    fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
