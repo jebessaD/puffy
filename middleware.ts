@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   if (isAdminRoute) {
     if (userEmail !== process.env.EMAIL_USERNAME) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
