@@ -15,7 +15,9 @@ export async function GET() {
       prisma.product.count({
         where: { isDeleted: false },
       }),
-      prisma.order.count(),
+      prisma.order.count({
+        where: { paymentStatus: "PAID" },
+      }),
       prisma.order.count({
         where: { orderStatus: "DELIVERED" },
       }),
