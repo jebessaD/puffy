@@ -20,8 +20,8 @@ interface OnChange {
 
 const statusStyles = {
   PROCESSING: {
-    bg: "bg-amber-50",
-    text: "text-orange-600",
+    bg: "bg-orange-50",
+    text: "text-orange-500",
   },
   SHIPPED: {
     bg: "bg-blue-50",
@@ -68,7 +68,7 @@ export default function DeliveryStatus({ status, id }: DeliveryStatusProps) {
       onValueChange={(newStatus) => handleStatusChange(newStatus, id)}
     >
       <SelectTrigger
-        className={`${currentStatus.bg} ${currentStatus.text} font-medium`}
+        className={`${currentStatus.bg} ${currentStatus.text} focus:outline-none outline-none font-medium`}
       >
         <div className="flex items-center gap-2">
           <SelectValue />

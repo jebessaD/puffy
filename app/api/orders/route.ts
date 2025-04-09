@@ -11,7 +11,11 @@ export async function GET() {
       },
       include: {
         shippingAddress: true,
-        orderItems: true,
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
