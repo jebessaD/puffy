@@ -103,7 +103,7 @@ export default function Navbar() {
 
       <div className="basis-1/3 flex space-x-2 sm:max-lg:space-x-6 lg:space-x-8 justify-end items-center">
         <div className=" hidden sm:flex justify-end space-x-2 sm:max-lg:space-x-6 lg:space-x-8">
-          <a href="mailto:getpuffyroll@gmail.com">
+          <a href="mailto:getpuffyroll@gmail.com" aria-label="Email">
             <GoMail size={26} className={`${hoverEffect}`} />
           </a>
 
