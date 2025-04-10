@@ -5,22 +5,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(req.url);
 
-    const category = searchParams.get("category") || undefined;
-    const minPrice = Math.max(
-      0,
-      parseFloat(searchParams.get("minPrice") || "0")
-    );
-    const maxPrice = Math.min(
-      1000000,
-      parseFloat(searchParams.get("maxPrice") || "1000000")
-    );
-    const sortBy = searchParams.get("sortBy") || "createdAt";
+    // Only keep search and sorting parameters
+    const sortBy =
+    searchParams.get("sortBy") === "price" ? "price" : "createdAt";
     const order = searchParams.get("order") === "asc" ? "asc" : "desc";
     const search = searchParams.get("search") || "";
 
     const where = {
-      ...(category && { category }),
-      price: { gte: minPrice, lte: maxPrice },
       ...(search
         ? {
             OR: [

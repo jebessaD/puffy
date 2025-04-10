@@ -61,8 +61,8 @@ export default function Cart() {
     const checkoutData: CheckoutProduct[] = items.map((item) => ({
       ...item.product,
       quantity: item.quantity,
-      selectedColor: "not selected",
-      selectedSize: "not selected",
+      selectedColor: "N/A",
+      selectedSize: "N/A",
     }));
 
     setCheckoutProducts(checkoutData);

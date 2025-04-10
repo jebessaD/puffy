@@ -12,6 +12,8 @@ import {
   Hash,
   XIcon,
   Send,
+  Check,
+  AlertCircle,
 } from "lucide-react";
 import DeliveryStatus from "./deliveryStatus";
 import Image from "next/image";
@@ -22,6 +24,7 @@ import { useState } from "react";
 import { trackingNumberUpdateHandler } from "@/app/hooks/useOrder";
 import { MutatorCallback } from "swr";
 import CopyText from "./copyButton";
+import { useToast } from "@/components/ui/use-toast";
 
 interface OrderCardProps {
   order: any;
@@ -30,78 +33,193 @@ interface OrderCardProps {
 
 export default function OrderCard({ order, mutate }: OrderCardProps) {
   const [trackingNumber, setTrackingNumber] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const { toast } = useToast();
 
-  const { sendEmail } = useSendEmail();
+  const { sendEmail, isLoading, errorMessage } = useSendEmail();
 
   const handleSendEmail = async () => {
     if (!trackingNumber) {
-      alert("Please enter a tracking number.");
+      toast({
+        title: "Tracking number required",
+        description: "Please enter a tracking number before sending.",
+        variant: "destructive",
+      });
       return;
     }
 
-    const emailHTML = generateEmailHTML(order);
-    const emailDetails = {
-      email: order.shippingAddress.email,
-      subject: "Shipping Tracking Number - Puffy Roll",
-      html: emailHTML,
-    };
+    setIsSending(true);
+    try {
+      const emailHTML = generateEmailHTML(order);
+      const emailDetails = {
+        email: order.shippingAddress.email,
+        subject: "Shipping Tracking Number - Puffy Roll",
+        html: emailHTML,
+      };
 
-    await trackingNumberUpdateHandler(trackingNumber, order.id);
+      await Promise.all([
+        trackingNumberUpdateHandler(trackingNumber, order.id),
+        sendEmail(emailDetails),
+      ]);
 
-    await sendEmail(emailDetails);
+      toast({
+        title: "Email sent successfully!",
+        description: `Tracking number ${trackingNumber} has been sent to ${order.shippingAddress.email}`,
+        variant: "default",
+      });
 
-    mutate();
-
-    setTrackingNumber("");
+      mutate();
+      setTrackingNumber("");
+    } catch (error) {
+      toast({
+        title: "Failed to send email",
+        description:
+          errorMessage || "An error occurred while sending the email",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  const generateEmailHTML = ({ order }: OrderCardProps): string => {
-    // const lineItemsHTML = order?.orderItems
-    //   ?.map(
-    //     (item: any) => `
-    //     <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
-    //       <h4 style="margin: 0; color: #333;">${item.name}</h4>
-    //       <p style="margin: 5px 0; color: #555;">Quantity: ${item.quantity}</p>
-    //       <div style="text-align: center; margin: 10px 0;">
-    //         <img src="${item.image}" alt="${item.name}" style="max-width: 100%; height: auto; border-radius: 8px;" />
-    //       </div>
-    //     </div>
-    //   `
-    //   )
-    //   .join("");
+  const generateEmailHTML = (order: any): string => {
+    const lineItemsHTML = order?.orderItems
+      ?.map(
+        (item: any) => `
+        <div style="
+          margin-bottom: 12px; 
+          padding: 12px; 
+          border: 1px solid #eaeaea; 
+          border-radius: 8px; 
+          background: #fff;
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        ">
+          ${
+            item.product?.mainImage
+              ? `
+          <div style="flex-shrink: 0;">
+            <img 
+              src="${item.product.mainImage}" 
+              alt="${item.product.name}" 
+              style="
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 4px;
+                border: 1px solid #f0f0f0;
+              " 
+            />
+          </div>
+          `
+              : ""
+          }
+          <div style="flex-grow: 1;">
+            <h4 style="margin: 0 0 4px 0; color: #333; font-size: 15px; font-weight: 600;">
+              ${item.product?.name || "Product"}
+            </h4>
+            <div style="display: flex; gap: 12px; font-size: 13px; color: #666;">
+              <span>Qty: ${item.quantity}</span>
+              <span>$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+      `
+      )
+      .join("");
 
     return `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;">
-      <h2 style="color: #2196F3; text-align: center;">Hey ${"Customer"}, your order is on the way! 🚚</h2>
-      
-      <p style="font-size: 16px; color: #333;">We're excited to let you know that your order from <strong>Puffy Roll</strong> has been shipped. Here are the details:</p>
-      
-      <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
-        <h3 style="color: #333;">📦 Items in Shipment</h3>
-
-        <p><strong>Shipping Date:</strong> ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
-        <p><strong>Shipping Ticket Number:</strong> <span style="color: #4CAF50;">#${trackingNumber || "N/A"}</span></p>
+    <div style="
+      font-family: Arial, sans-serif; 
+      max-width: 600px; 
+      margin: auto; 
+      padding: 0;
+      background: #f7f7f7;
+    ">
+      <div style="padding: 24px; background: #2196F3; text-align: center;">
+        <h2 style="margin: 0; color: white; font-size: 20px;">
+          Your Puffy Roll Order is On the Way! 🚚
+        </h2>
       </div>
+      
+      <div style="padding: 24px;">
+        <p style="font-size: 15px; color: #555; line-height: 1.5; margin-bottom: 20px;">
+          Hi ${order.shippingAddress.fullName || "Customer"},<br>
+          We're excited to let you know that your order has been shipped!
+        </p>
+        
+        <div style="
+          background: white; 
+          padding: 16px; 
+          border-radius: 8px; 
+          border: 1px solid #eaeaea;
+          margin-bottom: 20px;
+        ">
+          <h3 style="margin-top: 0; margin-bottom: 16px; color: #333; font-size: 16px;">
+            📦 Order Details
+          </h3>
+            <p style="margin: 8px 0;">
+              <strong style="color: #555;">Tracking Number:</strong> 
+              <span style="color: #4CAF50; font-weight: 600;">
+                ${trackingNumber}
+              </span>
+            </p>
+          ${lineItemsHTML}
+          
+          <div style="
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed #eaeaea;
+            font-size: 14px;
+          ">
+            <p style="margin: 8px 0;">
+              <strong style="color: #555;">Shipping Date:</strong> 
+              <span style="color: #666;">
+                ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+              </span>
+            </p>
 
-      <p style="font-size: 16px; text-align: center; color: #555; margin-top: 20px;">
-        Thank you for choosing Puffy Roll! If you have any questions or need help tracking your order, feel free to reach out.
-      </p>
-
-      <p style="font-size: 14px; text-align: center; color: #999; margin-top: 20px;">© 2025 Puffy Roll. All rights reserved.</p>
+          </div>
+        </div>
+        
+        <div style="
+          background: #f9f9f9;
+          border-radius: 8px;
+          padding: 16px;
+          text-align: center;
+          font-size: 14px;
+          color: #666;
+          border: 1px solid #eaeaea;
+        ">
+          <p style="margin: 0;">
+            Thank you for shopping with Puffy Roll!
+          </p>
+        </div>
+      </div>
+      
+      <div style="
+        padding: 16px;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        background: #f0f0f0;
+      ">
+        © ${new Date().getFullYear()} Puffy Roll. All rights reserved.
+      </div>
     </div>
   `;
   };
 
-  console.log(order);
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-2xl p-4 md:p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden">
       <div className="flex justify-between items-start mb-2">
         <div>
           {order.trackingNumber ? (
             <div className="flex items-center  text-gray-500 mb-1">
               <span className="text-xs mr-1 font-medium">Tracking No.</span>
               <Hash className="h-4 w-4" />
-              <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
+              <p className="text- font-bold text-gray-900 truncate max-w-[200px]">
                 {order.trackingNumber}
               </p>
               <CopyText text={order.trackingNumber} />
@@ -213,37 +331,50 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
           </div>
           <DeliveryStatus status={order.orderStatus} id={order.id} />
         </div>
-
-        {/* <div className="bg-gray-50 p-3 rounded-lg">
-          <div className="flex items-center gap-2 text-gray-500 mb-1">
-            <CreditCard className="h-4 w-4" />
-            <span className="text-xs font-medium">PAYMENT</span>
-          </div>
-          <div
-            className={`text-sm font-medium ${
-              order.paymentStatus === "PAID"
-                ? "text-green-600"
-                : "text-amber-600"
-            }`}
-          >
-            {order.paymentStatus}
-          </div>
-        </div> */}
       </div>
 
-      <div className="flex gap-1">
+      <div className="flex gap-1 mb-6">
         <Input
           placeholder="Tracking Number"
           value={trackingNumber.toUpperCase()}
           onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
         />
-        <Button onClick={handleSendEmail}>
-          <Send />
+        <Button onClick={handleSendEmail} disabled={isSending || isLoading}>
+          {isSending || isLoading ? (
+            <div className="flex items-center gap-2">
+              <svg
+                className="animate-spin h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Send
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Send className="h-4 w-4" />
+              Send
+            </div>
+          )}
         </Button>
       </div>
 
       {/* Shipping Address */}
-      <div className="border-t pt-4">
+      <div className="">
         <div className="flex items-center gap-2 text-gray-500 mb-3">
           <MapPin className="h-4 w-4" />
           <span className="text-xs font-medium">SHIPPING ADDRESS</span>

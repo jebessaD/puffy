@@ -21,7 +21,11 @@ interface ProductCardProps {
   isHome?: boolean;
 }
 
-export default function ProductCard({ product, mutate, isHome = false }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  mutate,
+  isHome = false,
+}: ProductCardProps) {
   const { items, removeItem, addItem } = useCartStore();
   const { toast } = useToast();
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +82,9 @@ export default function ProductCard({ product, mutate, isHome = false }: Product
         onClick={isAdminEdit ? undefined : () => setShowModal(true)}
       >
         {/* Image Container */}
-        <div className={`relative bg-white   ${isHome? "h-60":"h-32"} lg:h-auto   lg:aspect-square overflow-hidden`}>
+        <div
+          className={`relative bg-white   ${isHome ? "h-60" : "h-32"} lg:h-auto   lg:aspect-square overflow-hidden`}
+        >
           <Image
             src={imageUrl}
             alt={product.name}
@@ -131,12 +137,16 @@ export default function ProductCard({ product, mutate, isHome = false }: Product
                         .{discountedPrice.toFixed(2).split(".")[1]}
                       </span>{" "}
                     </span>
-                    <div className={`flex md:hidden ${isHome ? "hidden":""} items-center justify-center space-x-2 p-1 text-green-600 bg-green-100 my-1 gap-2`}>
+                    <div
+                      className={`flex md:hidden ${isHome ? "hidden" : ""} items-center justify-center space-x-2 p-1 text-green-600 bg-green-100 my-1 gap-2`}
+                    >
                       <LiaShippingFastSolid />{" "}
                       <span className="text-xs">Free Shipping</span>
                     </div>
                   </div>
-                  <div className={`text-sm hn bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex bg-green-100 ${isHome ? "flex":"hidden"} `}>
+                  <div
+                    className={`text-sm hn bg-green-100 p-1 h-fit space-x-2 items-center rounded px-2 text-green-600 mb-1 md:flex bg-green-100 ${isHome ? "flex" : "hidden"} `}
+                  >
                     <LiaShippingFastSolid />{" "}
                     <span className="text-xs text-nowrap">Free Shipping</span>
                   </div>
@@ -165,17 +175,18 @@ export default function ProductCard({ product, mutate, isHome = false }: Product
             {/* Add to Cart Button - Positioned absolutely */}
             {isAdminEdit ? (
               // Admin Edit/Delete Buttons
-              <div className="flex gap-2 mt-6">
-                <button
+              <div className="flex gap-2 ">
+                <Button
+                  variant="outline"
                   onClick={handleEdit}
-                  className="flex-1 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 
+                  className="flex-1 px-4 py-2 bg-blue-50 border text-gary-600 hover:bg-blue-100 
                       rounded-sm font-medium transform transition-all duration-300
                       opacity-100 lg:opacity-0 lg:group-hover:opacity-100
                       flex items-center justify-center gap-2"
                 >
-                  <Pencil className="h-4 w-4" />
+                  <Pencil className="h-4 w-4 max-sm:hidden" />
                   Edit
-                </button>
+                </Button>
                 {/* <button
                     onClick={handleDelete}
                     className="flex-1 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100

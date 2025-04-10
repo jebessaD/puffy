@@ -40,10 +40,10 @@ export default function Page() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-gray-50">
+    <div className="p-3 md:p-8 min-h-screen bg-gray-50">
       <div className="flex items-baseline justify-between">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">
-          📦 Admin Order Dashboard
+        <h1 className="text-lg md:text-3xl font-bold mb-6 text-gray-800">
+          📦 Admin Orders Dashboard
         </h1>
         <div className="flex items-center space-x-2">
           <Switch
@@ -58,7 +58,7 @@ export default function Page() {
       {orders.length === 0 && !allOrder ? (
         <p className="text-gray-600">No orders found.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {(allOrder
             ? orders
             : orders.filter((order: any) => order.orderStatus !== "DELIVERED")

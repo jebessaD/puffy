@@ -59,7 +59,7 @@ export default function EditPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
+          <div className="grid grid-cols-2 gap-2 md:gap-6 sm:grid-cols-3 lg:grid-cols-4 ">
             {products.map((product: Product) => (
               <ProductCard key={product.id} product={product} mutate={mutate} />
             ))}

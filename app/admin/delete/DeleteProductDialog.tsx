@@ -59,7 +59,7 @@ export function DeleteProductDialog({
                       opacity-100 lg:opacity-0 lg:group-hover:opacity-100
                       flex items-center justify-center gap-2"
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4 max-sm:hidden" />
           Delete
         </Button>
       </AlertDialogTrigger>
