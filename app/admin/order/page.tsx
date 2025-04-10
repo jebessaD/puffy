@@ -18,7 +18,7 @@ export default function Page() {
     revalidateOnFocus: false,
   });
 
-  const [isDelivered, setIsDelivered] = useState(false);
+  const [allOrder, setAllOrder] = useState(false);
 
   if (isLoading)
     return (
@@ -36,7 +36,7 @@ export default function Page() {
 
   const handleToggle = (checked: boolean) => {
     mutate();
-    setIsDelivered(checked);
+    setAllOrder(checked);
   };
 
   return (
@@ -48,22 +48,22 @@ export default function Page() {
         <div className="flex items-center space-x-2">
           <Switch
             id="airplane-mode"
-            checked={isDelivered}
+            checked={allOrder}
             onCheckedChange={handleToggle}
           />
-          <Label htmlFor="airplane-mode">Delivered</Label>
+          <Label className="text-nowrap" htmlFor="airplane-mode">All Orders</Label>
         </div>
       </div>
 
-      {orders.length === 0 && !isDelivered ? (
+      {orders.length === 0 && !allOrder ? (
         <p className="text-gray-600">No orders found.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {(isDelivered
-            ? orders.filter((order: any) => order.orderStatus !== "DELIVERED")
-            : orders
+          {(allOrder
+            ? orders
+            : orders.filter((order: any) => order.orderStatus !== "DELIVERED")
           ).map((order: any) => (
-            <OrderCard key={order.id} order={order} />
+            <OrderCard key={order.id} order={order} mutate={mutate} />
           ))}
         </div>
       )}

@@ -45,3 +45,19 @@ export async function PATCH(req: Request) {
     );
   }
 }
+export async function PUT(req: Request) {
+  try {
+    const { id, trackingNumber } = await req.json();
+    const updatedOrder = await prisma.order.update({
+      where: { id },
+      data: { trackingNumber: trackingNumber },
+    });
+    return NextResponse.json(updatedOrder);
+  } catch (error) {
+    console.error("Failed to update order status:", error);
+    return NextResponse.json(
+      { error: "Failed to update order status" },
+      { status: 500 }
+    );
+  }
+}

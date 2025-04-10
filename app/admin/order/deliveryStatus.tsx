@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { deliveryStatus } from "@/app/hooks/useOrder";
 
 interface DeliveryStatusProps {
   status: string;
@@ -42,16 +43,7 @@ export default function DeliveryStatus({ status, id }: DeliveryStatusProps) {
 
   const handleStatusChange: OnChange = async (status: string, id: number) => {
     try {
-      const res = await fetch("/api/orders", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status, id }),
-      });
-      if (!res.ok) {
-        throw new Error("Failed to update delivery status");
-      }
+      await deliveryStatus(status, id);
     } catch (error) {
       console.error("Error updating delivery status:", error);
     }
@@ -83,6 +75,7 @@ export default function DeliveryStatus({ status, id }: DeliveryStatusProps) {
             value="PROCESSING"
             className="flex items-center gap-2 focus:bg-amber-50 focus:text-amber-600"
           >
+            
             PROCESSING
           </SelectItem>
           <SelectItem
