@@ -53,6 +53,7 @@ export default function ProductInfoSection({
         <input
           {...register("price")}
           type="number"
+          step={0.01}
           placeholder="Enter price"
           className={inputBorderInput}
         />

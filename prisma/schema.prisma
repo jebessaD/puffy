@@ -62,6 +62,7 @@ model Order {
   shippingAddress   ShippingAddress @relation(fields: [shippingAddressId], references: [id])
   orderItems        OrderItem[]
   payment           Payment?
+  trackingNumber    String?
 }
 
 model OrderItem {
@@ -72,8 +73,8 @@ model OrderItem {
   price     Float
   order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
-  color    String   @default("N/A")
-  size     String   @default("N/A")
+  color     String  @default("N/A")
+  size      String  @default("N/A")
 }
 
 model Discount {

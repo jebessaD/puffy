@@ -11,27 +11,110 @@ import {
   Calendar,
   Hash,
   XIcon,
+  Send,
 } from "lucide-react";
 import DeliveryStatus from "./deliveryStatus";
 import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useSendEmail } from "@/app/hooks/useOrder";
+import { useState } from "react";
+import { trackingNumberUpdateHandler } from "@/app/hooks/useOrder";
+import { MutatorCallback } from "swr";
+import CopyText from "./copyButton";
 
 interface OrderCardProps {
   order: any;
+  mutate: MutatorCallback;
 }
 
-export default function OrderCard({ order }: OrderCardProps) {
+export default function OrderCard({ order, mutate }: OrderCardProps) {
+  const [trackingNumber, setTrackingNumber] = useState("");
+
+  const { sendEmail } = useSendEmail();
+
+  const handleSendEmail = async () => {
+    if (!trackingNumber) {
+      alert("Please enter a tracking number.");
+      return;
+    }
+
+    const emailHTML = generateEmailHTML(order);
+    const emailDetails = {
+      email: order.shippingAddress.email,
+      subject: "Shipping Tracking Number - Puffy Roll",
+      html: emailHTML,
+    };
+
+    await trackingNumberUpdateHandler(trackingNumber, order.id);
+
+    await sendEmail(emailDetails);
+
+    mutate();
+
+    setTrackingNumber("");
+  };
+
+  const generateEmailHTML = ({ order }: OrderCardProps): string => {
+    // const lineItemsHTML = order?.orderItems
+    //   ?.map(
+    //     (item: any) => `
+    //     <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+    //       <h4 style="margin: 0; color: #333;">${item.name}</h4>
+    //       <p style="margin: 5px 0; color: #555;">Quantity: ${item.quantity}</p>
+    //       <div style="text-align: center; margin: 10px 0;">
+    //         <img src="${item.image}" alt="${item.name}" style="max-width: 100%; height: auto; border-radius: 8px;" />
+    //       </div>
+    //     </div>
+    //   `
+    //   )
+    //   .join("");
+
+    return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;">
+      <h2 style="color: #2196F3; text-align: center;">Hey ${"Customer"}, your order is on the way! 🚚</h2>
+      
+      <p style="font-size: 16px; color: #333;">We're excited to let you know that your order from <strong>Puffy Roll</strong> has been shipped. Here are the details:</p>
+      
+      <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #333;">📦 Items in Shipment</h3>
+
+        <p><strong>Shipping Date:</strong> ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+        <p><strong>Shipping Ticket Number:</strong> <span style="color: #4CAF50;">#${trackingNumber || "N/A"}</span></p>
+      </div>
+
+      <p style="font-size: 16px; text-align: center; color: #555; margin-top: 20px;">
+        Thank you for choosing Puffy Roll! If you have any questions or need help tracking your order, feel free to reach out.
+      </p>
+
+      <p style="font-size: 14px; text-align: center; color: #999; margin-top: 20px;">© 2025 Puffy Roll. All rights reserved.</p>
+    </div>
+  `;
+  };
+
   console.log(order);
   return (
     <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 overflow-hidden">
       <div className="flex justify-between items-start mb-2">
         <div>
-          <div className="flex items-center  text-gray-500 mb-1">
-            <span className="text-xs mr-1 font-medium">ORDER</span>{" "}
-            <Hash className="h-4 w-4" />{" "}
-            <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
-              {order.id}
-            </p>
-          </div>
+          {order.trackingNumber ? (
+            <div className="flex items-center  text-gray-500 mb-1">
+              <span className="text-xs mr-1 font-medium">Tracking No.</span>
+              <Hash className="h-4 w-4" />
+              <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
+                {order.trackingNumber}
+              </p>
+              <CopyText text={order.trackingNumber} />
+            </div>
+          ) : (
+            <div className="flex items-center  text-gray-500 mb-1">
+              <span className="text-xs mr-1 font-medium">ORDER</span>
+              <Hash className="h-4 w-4" />
+              <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
+                {order.id}
+              </p>
+            </div>
+          )}
         </div>
         <div className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
           <Calendar className="h-3 w-3" />
@@ -146,6 +229,17 @@ export default function OrderCard({ order }: OrderCardProps) {
             {order.paymentStatus}
           </div>
         </div> */}
+      </div>
+
+      <div className="flex gap-1">
+        <Input
+          placeholder="Tracking Number"
+          value={trackingNumber.toUpperCase()}
+          onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
+        />
+        <Button onClick={handleSendEmail}>
+          <Send />
+        </Button>
       </div>
 
       {/* Shipping Address */}

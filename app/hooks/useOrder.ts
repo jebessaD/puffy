@@ -1,5 +1,5 @@
 import useSWRMutation from "swr/mutation";
-import { fetcher, post } from "../lib/fetcher";
+import { fetcher, post, patch, trackingNumberUpdate } from "../lib/fetcher";
 import useSWR from "swr";
 
 export function useSendEmail() {
@@ -32,8 +32,6 @@ export function useSendEmail() {
 export function useStats() {
   const { data, error, isLoading } = useSWR("/api/admin/stats", fetcher);
 
-
-
   interface UseStatsReturn {
     stats: any;
     isLoading: boolean;
@@ -43,6 +41,16 @@ export function useStats() {
   return {
     stats: data?.success ? data.data : null,
     isLoading,
-    errorMessage: error ? "Failed to fetch dashboard data" : data?.error || null,
+    errorMessage: error
+      ? "Failed to fetch dashboard data"
+      : data?.error || null,
   } as UseStatsReturn;
 }
+
+export const deliveryStatus = async (status: string, id: number) => {
+  await patch("/api/orders", status, id);
+};
+
+export const trackingNumberUpdateHandler = async (trackingNumber: string, id: number) => {
+  await trackingNumberUpdate("/api/orders", trackingNumber, id);
+};
