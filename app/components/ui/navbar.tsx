@@ -58,11 +58,8 @@ export default function Navbar() {
               </div>
               <hr className="-mx-6" />
               <div className="-mx-6 flex justify-around">
-                <a
-                  href={`mailto:${process.env.EMAIL_USERNAME}`}
-                  target="_blank"
-                >
-                  <GoMail size={25} />
+                <a href="mailto:getpuffyroll@gmail.com" aria-label="Email">
+                  <GoMail size={25} className={`${hoverEffect}`} />
                 </a>
                 <a href="https://www.instagram.com/Getpuffy_" target="_blank">
                   <BiLogoInstagram size={25} />
