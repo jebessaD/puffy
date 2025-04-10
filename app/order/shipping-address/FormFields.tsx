@@ -69,7 +69,7 @@ export const FormFields: React.FC<Props> = ({ register, errors }) => (
       />
 
       <TextInput
-        label="Zip Code"
+        label="Postal Code"
         name="postalCode"
         register={register}
         error={errors.postalCode as any}

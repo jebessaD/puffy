@@ -10,6 +10,7 @@ import {
   DollarSign,
   Calendar,
   Hash,
+  XIcon,
   Send,
 } from "lucide-react";
 import DeliveryStatus from "./deliveryStatus";
@@ -20,6 +21,7 @@ import { useSendEmail } from "@/app/hooks/useOrder";
 import { useState } from "react";
 import { trackingNumberUpdateHandler } from "@/app/hooks/useOrder";
 import { MutatorCallback } from "swr";
+import CopyText from "./copyButton";
 
 interface OrderCardProps {
   order: any;
@@ -32,7 +34,6 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
   const { sendEmail } = useSendEmail();
 
   const handleSendEmail = async () => {
-
     if (!trackingNumber) {
       alert("Please enter a tracking number.");
       return;
@@ -54,30 +55,30 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
     setTrackingNumber("");
   };
 
-  const generateEmailHTML = ({order}: OrderCardProps): string => {
-    const lineItemsHTML = order?.orderItems
-      ?.map(
-        (item: any) => `
-        <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
-          <h4 style="margin: 0; color: #333;">${item.name}</h4>
-          <p style="margin: 5px 0; color: #555;">Quantity: ${item.quantity}</p>
-          <div style="text-align: center; margin: 10px 0;">
-            <img src="${item.image}" alt="${item.name}" style="max-width: 100%; height: auto; border-radius: 8px;" />
-          </div>
-        </div>
-      `
-      )
-      .join("");
+  const generateEmailHTML = ({ order }: OrderCardProps): string => {
+    // const lineItemsHTML = order?.orderItems
+    //   ?.map(
+    //     (item: any) => `
+    //     <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+    //       <h4 style="margin: 0; color: #333;">${item.name}</h4>
+    //       <p style="margin: 5px 0; color: #555;">Quantity: ${item.quantity}</p>
+    //       <div style="text-align: center; margin: 10px 0;">
+    //         <img src="${item.image}" alt="${item.name}" style="max-width: 100%; height: auto; border-radius: 8px;" />
+    //       </div>
+    //     </div>
+    //   `
+    //   )
+    //   .join("");
 
     return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;">
-      <h2 style="color: #2196F3; text-align: center;">Hey ${order.shippingAddress.fullName || "Customer"}, your order is on the way! 🚚</h2>
+      <h2 style="color: #2196F3; text-align: center;">Hey ${"Customer"}, your order is on the way! 🚚</h2>
       
       <p style="font-size: 16px; color: #333;">We're excited to let you know that your order from <strong>Puffy Roll</strong> has been shipped. Here are the details:</p>
       
       <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
         <h3 style="color: #333;">📦 Items in Shipment</h3>
-        ${lineItemsHTML}
+
         <p><strong>Shipping Date:</strong> ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
         <p><strong>Shipping Ticket Number:</strong> <span style="color: #4CAF50;">#${trackingNumber || "N/A"}</span></p>
       </div>
@@ -94,15 +95,26 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
   console.log(order);
   return (
     <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 overflow-hidden">
-      <div className="flex justify-between items-start mb-6">
+      <div className="flex justify-between items-start mb-2">
         <div>
-          <div className="flex items-center  text-gray-500 mb-1">
-            <span className="text-xs mr-1 font-medium">ORDER</span>{" "}
-            <Hash className="h-4 w-4" />{" "}
-            <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
-              {order.id}
-            </p>
-          </div>
+          {order.trackingNumber ? (
+            <div className="flex items-center  text-gray-500 mb-1">
+              <span className="text-xs mr-1 font-medium">Tracking No.</span>
+              <Hash className="h-4 w-4" />
+              <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
+                {order.trackingNumber}
+              </p>
+              <CopyText text={order.trackingNumber} />
+            </div>
+          ) : (
+            <div className="flex items-center  text-gray-500 mb-1">
+              <span className="text-xs mr-1 font-medium">ORDER</span>
+              <Hash className="h-4 w-4" />
+              <p className="text-xl font-bold text-gray-900 truncate max-w-[200px]">
+                {order.id}
+              </p>
+            </div>
+          )}
         </div>
         <div className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
           <Calendar className="h-3 w-3" />
@@ -120,7 +132,7 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
           {order.orderItems.map((item: any) => (
             <div
               key={item.id}
-              className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors"
+              className="flex items-center gap-3 p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                 {item.product?.mainImage && (
@@ -133,18 +145,48 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
                   />
                 )}
               </div>
-              <div className="flex-1 min-w-0">
+
+              <div className="flex-1 min-w-0 space-y-1">
                 <p className="font-medium text-gray-900 truncate">
                   {item.product?.name || "Unnamed Product"}
                 </p>
-                <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                <div className="flex items-center space-x-2 ">
+                  {item.color && (
+                    <div className="flex items-center">
+                      <span
+                        className="w-3 h-3 rounded-full border border-gray-200 mr-1"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="text-xs text-gray-500 capitalize">
+                        {item.color}
+                      </span>
+                    </div>
+                  )}
+                  {item.size && (
+                    <div className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 rounded-full">
+                      {item.size}
+                    </div>
+                  )}
+                </div>
               </div>
+
               <div className="text-right">
                 <p className="font-medium text-gray-900">
                   ${item.price.toFixed(2)}
                 </p>
+
                 <p className="text-xs text-gray-500">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ${(item.price * item.quantity).toFixed(2)}{" "}
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-center border-l px-2">
+                {" "}
+                <p className="text-xs text-gray-500">Qty</p>
+                <p className="text-sm text-gray-600 ">
+                  <span className="font-bold text-lg flex items-center">
+                    <XIcon size={14} />
+                    {item.quantity}
+                  </span>
                 </p>
               </div>
             </div>
@@ -187,15 +229,6 @@ export default function OrderCard({ order, mutate }: OrderCardProps) {
             {order.paymentStatus}
           </div>
         </div> */}
-      </div>
-
-      <div>
-        {order.trackingNumber ? (
-          <div className="flex items-center gap-1">
-            Tracking Number:{" "}
-            {<div className="text-gray-500">{order.trackingNumber}</div>}
-          </div>
-        ) : null}
       </div>
 
       <div className="flex gap-1">
