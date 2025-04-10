@@ -40,7 +40,7 @@ export default function Page() {
   };
 
   return (
-    <div className="p-3 md:p-8 min-h-screen bg-gray-50">
+    <div className="p-2 md:p-8 min-h-screen bg-gray-50">
       <div className="flex items-baseline justify-between">
         <h1 className="text-lg md:text-3xl font-bold mb-6 text-gray-800">
           📦 Admin Orders Dashboard
