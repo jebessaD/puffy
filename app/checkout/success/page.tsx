@@ -127,13 +127,13 @@ function SuccessContent() {
 
   if (loading)
     return (
-      <p className="text-center py-12">
+      <p className="text-center py-12 min-h-screen">
         <Loading />
       </p>
     );
   if (error)
     return (
-      <div className="text-center py-44">
+    <div className="text-center py-44 min-h-screen">
         <h1 className="text-2xl font-bold ">Invalid Session</h1>
         <p className="text-gray-600 mb-10">{error}</p>
         <Link
