@@ -16,7 +16,7 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.4,
     },
   },
 };
@@ -57,7 +57,7 @@ export default function HomePage() {
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
             className="text-5xl md:text-8xl font-extrabold text-white fancy-font "
           >
             PUFFY
@@ -68,7 +68,7 @@ export default function HomePage() {
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
             className="text-lg flex md:text-2xl items-start text-gray-300 mt-4 max-w-2xl"
           >
-            <span className="mx-6"></span>
+            <span className="mx-4 sm:mx-6"></span>
             <p className="self-end text-center">Vibe high, stay fly</p>{" "}
             <span>
               <PiQuotesDuotone className="mx-2 text-gray-200 text-xl md:text-2xl lg:text-4xl" />
@@ -122,7 +122,7 @@ export default function HomePage() {
                 key={product.id}
                 variants={item}
                 whileHover={{ y: -5 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.4 }}
               >
                 <ProductCard product={product} mutate={mutate} isHome={true} />
               </motion.div>
@@ -153,6 +153,7 @@ export default function HomePage() {
             className="grid md:grid-cols-3 gap-8"
           >
             <motion.div
+            transition={{ duration: 0.4 }}
               variants={item} // Reusing the same item variants
               className="bg-white p-8 rounded-xl shadow-sm text-center"
             >
@@ -166,6 +167,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
+            transition={{ duration: 0.4 }}
               variants={item}
               className="bg-white p-8 rounded-xl shadow-sm text-center"
             >
@@ -179,6 +181,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
+            transition={{ duration: 0.4 }}
               variants={item}
               className="bg-white p-8 rounded-xl shadow-sm text-center"
             >
