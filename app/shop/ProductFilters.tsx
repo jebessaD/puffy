@@ -63,8 +63,15 @@ export default function ProductFilters({
               value={`${filters.sortBy}-${filters.order}`}
               onValueChange={(value) => {
                 const [sortBy, order] = value.split("-");
-                handleChange("sortBy", sortBy);
-                handleChange("order", order);
+
+                const newFilters: ProductFilters = {
+                  ...filters,
+                  sortBy: sortBy as "price" | "rating" | "createdAt",
+                  order: order as "asc" | "desc",
+                };
+
+                setFilters(newFilters);
+                onFilterChange(newFilters);
               }}
             >
               <SelectTrigger className="h-12 w-full md:max-w-[220px]">
@@ -77,7 +84,6 @@ export default function ProductFilters({
                 <SelectItem value="createdAt-asc">Older to Newer</SelectItem>
                 <SelectItem value="price-asc">Price: Low to High</SelectItem>
                 <SelectItem value="price-desc">Price: High to Low</SelectItem>
-          
               </SelectContent>
             </Select>
           </div>{" "}
