@@ -12,9 +12,10 @@ import {
   FaApple,
   FaGoogle,
 } from "react-icons/fa";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCheckout } from "@/app/hooks/useOrder";
+import Loading from "@/app/components/ui/loading";
 
 interface Product {
   id: string;
@@ -62,7 +63,7 @@ const CheckoutPage = () => {
       await handleCheckout({ checkoutProducts, shippingAddress, totalPrice });
       if (successUrl) {
         if (fromCart) {
-          clearCart(); 
+          clearCart();
         }
         window.location.href = successUrl;
       }
@@ -195,4 +196,16 @@ const CheckoutPage = () => {
   );
 };
 
-export default CheckoutPage;
+export default function Checkout() {
+  return (
+    <Suspense
+      fallback={
+        <p className="text-center py-12">
+          <Loading />
+        </p>
+      }
+    >
+      <CheckoutPage />
+    </Suspense>
+  );
+}

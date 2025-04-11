@@ -1,16 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { shippingAddressSchema, ShippingAddress } from "@/app/lib/schema";
+import { shippingAddressSchema } from "@/app/lib/schema";
+import type { ShippingAddress } from "@/app/lib/schema";
 import { FormFields } from "./FormFields";
 import ProgressSteps from "./ProgressSteps";
 import PaymentMethods from "./PaymentMethods";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "../../store/useCartStore";
 import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "@/app/components/ui/loading";
 
-const ShippingAddressForm: React.FC = () => {
+function ShippingAddressForm() {
   const [isDefault, setIsDefault] = useState(true);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -97,6 +99,18 @@ const ShippingAddressForm: React.FC = () => {
       </div>
     </form>
   );
-};
+}
 
-export default ShippingAddressForm;
+export default function ShippingAddress() {
+  return (
+    <Suspense
+      fallback={
+        <p className="text-center py-12">
+          <Loading />
+        </p>
+      }
+    >
+      <ShippingAddressForm />
+    </Suspense>
+  );
+}
