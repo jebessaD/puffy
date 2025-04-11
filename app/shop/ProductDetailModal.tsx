@@ -84,7 +84,7 @@ export default function ProductDetailModal({
                 }
                 alt={product.name}
                 fill
-                className="object-contain"
+                className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
@@ -121,7 +121,7 @@ export default function ProductDetailModal({
                 </DialogTitle>
 
                 <div className="space-y-2">
-                  {product.discount && (
+                  {product.discount ? (
                     <div className="flex items-center gap-1.5">
                       <div className="text-sm md:text-base text-gray-500 line-through">
                         ${product.price.toFixed(2)}
@@ -133,7 +133,7 @@ export default function ProductDetailModal({
                         {product.discount}% OFF
                       </Badge>
                     </div>
-                  )}
+                  ):<></>}
                   <div className="text-xl md:text-2xl font-semibold text-gray-900">
                     ${discountedPrice.toFixed(2)}
                   </div>
@@ -234,7 +234,7 @@ export default function ProductDetailModal({
                       ${(discountedPrice * quantity).toFixed(2)}
                     </span>
                   </div>
-                  {product.discount && (
+                  {product.discount ? (
                     <div className="flex items-center gap-1.5">
                       <span className="text-sm text-gray-500">You save:</span>
                       <span className="text-sm font-medium text-green-600">
@@ -244,7 +244,7 @@ export default function ProductDetailModal({
                         )}
                       </span>
                     </div>
-                  )}
+                  ):<></>}
                 </div>
                 <Button
                   onClick={handleProceedToCheckout}
