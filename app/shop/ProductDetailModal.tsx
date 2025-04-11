@@ -31,8 +31,8 @@ export default function ProductDetailModal({
 
   const [selectedImage, setSelectedImage] = useState(product.mainImage);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>("N/A");
+  const [selectedSize, setSelectedSize] = useState<string | null>("N/A");
   const allImages = [product.mainImage, ...product.additionalImages];
 
   const router = useRouter();
@@ -65,6 +65,8 @@ export default function ProductDetailModal({
         selectedSize,
       },
     ]);
+
+    console.log(selectedColor, selectedSize, quantity);
 
     router.push(`order/shipping-address`);
   };
@@ -133,7 +135,9 @@ export default function ProductDetailModal({
                         {product.discount}% OFF
                       </Badge>
                     </div>
-                  ):<></>}
+                  ) : (
+                    <></>
+                  )}
                   <div className="text-xl md:text-2xl font-semibold text-gray-900">
                     ${discountedPrice.toFixed(2)}
                   </div>
@@ -244,7 +248,9 @@ export default function ProductDetailModal({
                         )}
                       </span>
                     </div>
-                  ):<></>}
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <Button
                   onClick={handleProceedToCheckout}

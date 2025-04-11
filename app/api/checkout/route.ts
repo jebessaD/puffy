@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { checkoutProducts, shippingAddress } = await req.json();
 
-    // Validate required fields
+    
     if (!checkoutProducts?.length || !shippingAddress?.email) {
       return NextResponse.json(
         { error: "Products and email are required" },
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         orderStatus: "PENDING",
         orderItems: {
           create: checkoutProducts.map((product: any) => ({
-            productId: product.id,
+            product: { connect: { id: product.id } },
             color: product?.selectedColor,
             size: product?.selectedSize,
             quantity: product.quantity,

@@ -13,6 +13,8 @@ import {
   FaGoogle,
 } from "react-icons/fa";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCheckout } from "@/app/hooks/useOrder";
 
 interface Product {
   id: string;
@@ -26,8 +28,10 @@ interface Product {
 }
 
 const CheckoutPage = () => {
-  const { checkoutProducts, shippingAddress } = useCartStore();
+  const { checkoutProducts, shippingAddress, clearCart } = useCartStore();
+  const searchParams = useSearchParams();
   const steps = ["Shipping Address", "Checkout"];
+  const fromCart = searchParams.get("fromCart");
 
   const calculateDiscountedPrice = (
     price: number,
@@ -48,26 +52,22 @@ const CheckoutPage = () => {
     return acc + product.quantity * product.price;
   }, 0);
 
-
   const [loading, setLoading] = useState(false);
 
-  const handleCheckout = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ checkoutProducts, shippingAddress, totalPrice }),
-      });
+  const { handleCheckout, isLoading, successUrl, errorMessage } = useCheckout();
 
-      const { url } = await response.json();
-      if (url) {
-        window.location.href = url; // Redirect to Stripe
+  const proceedToCheckout = async () => {
+    try {
+      console.log("Proceeding to checkout with products:", checkoutProducts);
+      await handleCheckout({ checkoutProducts, shippingAddress, totalPrice });
+      if (successUrl) {
+        if (fromCart) {
+          clearCart(); 
+        }
+        window.location.href = successUrl;
       }
     } catch (error) {
-      console.error("Checkout error", error);
-    } finally {
-      setLoading(false);
+      console.error("Checkout error", errorMessage);
     }
   };
 
@@ -181,7 +181,7 @@ const CheckoutPage = () => {
               <option>PayPal</option>
             </select> */}{" "}
             <Button
-              onClick={handleCheckout}
+              onClick={proceedToCheckout}
               size={"lg"}
               className="rounded-sm h-10 w-full mt-4"
               disabled={loading}

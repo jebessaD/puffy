@@ -66,7 +66,7 @@ export default function Cart() {
     }));
 
     setCheckoutProducts(checkoutData);
-    router.push("/order/shipping-address");
+    router.push("/order/shipping-address?fromCart=true");
   };
 
   const [mounted, setMounted] = useState(false);

@@ -8,12 +8,13 @@ import ProgressSteps from "./ProgressSteps";
 import PaymentMethods from "./PaymentMethods";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "../../store/useCartStore";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ShippingAddressForm: React.FC = () => {
   const [isDefault, setIsDefault] = useState(true);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { checkoutProducts, setShippingAddress } = useCartStore();
   const steps = ["Shipping Address", "Checkout"];
 
@@ -39,7 +40,9 @@ const ShippingAddressForm: React.FC = () => {
       form.reset(parsedAddress);
       setIsDefault(true);
     }
-  }, [form]);
+
+    const fromCart = searchParams.get("fromCart");
+  }, [form, searchParams]);
 
   const onSubmit = async (data: ShippingAddress) => {
     setLoading(true);
@@ -49,7 +52,8 @@ const ShippingAddressForm: React.FC = () => {
       if (isDefault) {
         localStorage.setItem("defaultShippingAddress", JSON.stringify(data));
       }
-      router.push("/order/info-confirmation");
+      const fromCart = searchParams.get("fromCart");
+      router.push(`/order/info-confirmation${fromCart ? `?fromCart=${fromCart}` : ""}`);
     } finally {
       setLoading(false);
     }
