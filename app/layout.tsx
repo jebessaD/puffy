@@ -15,7 +15,7 @@ export const metadata : Metadata = {
   description:
     "Discover the best electric joint roller and herb grinder combo. Puffy Roller is the top 420 gadget for effortless, clean, and perfect rolls every time.",
   openGraph: {
-    title: "Top Electric Joint Roller – Puffy Roller",
+    title: "Top Electric Joint Roller - Puffy Roller",
     description:
       "Looking for the best way to roll joints? Puffy Roller is a compact, automatic joint roller and weed grinder loved by beginners and pros.",
     url: "https://puffyroll.com",
@@ -25,7 +25,7 @@ export const metadata : Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Best Herb Grinder & Roller – Puffy Roller",
+    title: "Best Herb Grinder & Roller - Puffy Roller",
     description:
       "The ultimate 420 smoking accessory. Get perfect joints fast with the best electric grinder and roller in one.",
     images: [],
