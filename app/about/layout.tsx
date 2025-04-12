@@ -22,16 +22,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function AboutLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body>
-        <main>{children}</main>
-      </body>
-    </html>
-  );
+}) {
+  return <>{children}</>;
 }

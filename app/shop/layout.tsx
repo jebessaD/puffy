@@ -23,16 +23,10 @@ export const metadata :Metadata = {
 };
 
 
-export default function RootLayout({
+export default function ShopLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body>
-        <main className="">{children}</main>
-      </body>
-    </html>
-  );
+}) {
+  return <>{children}</>;
 }
