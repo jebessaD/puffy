@@ -10,11 +10,28 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
+export const metadata : Metadata = {
   title: "Puffy - Vibe high, stay fly",
   description:
-    "The Puffy Roller is the ultimate automatic joint roller and herb grinder combo designed for fast, smooth, and consistent rolls. This electric weed roller is compact, portable, and easy to use — perfect for beginners and pros alike. Say goodbye to hand rolling and messy grinds with this all-in-one weed rolling machine. Ideal for home or on-the-go use, the Puffy Roller pairs perfectly with top-rated 420 accessories like rolling trays, pre-rolled cones, filter tips, smell-proof bags, and stash containers. Whether you're searching for the best joint roller, weed grinder, or smoking kit, this device delivers quality and convenience. Great for dry herbs, it's a must-have for any cannabis smoker, stoner gear collection, or smoking setup. Order now for fast shipping and premium performance.",
+    "Discover the best electric joint roller and herb grinder combo. Puffy Roller is the top 420 gadget for effortless, clean, and perfect rolls every time.",
+  openGraph: {
+    title: "Top Electric Joint Roller – Puffy Roller",
+    description:
+      "Looking for the best way to roll joints? Puffy Roller is a compact, automatic joint roller and weed grinder loved by beginners and pros.",
+    url: "https://puffyroll.com",
+    siteName: "Puffy Roller",
+    images: [],
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Best Herb Grinder & Roller – Puffy Roller",
+    description:
+      "The ultimate 420 smoking accessory. Get perfect joints fast with the best electric grinder and roller in one.",
+    images: [],
+  },
 };
+
 
 export default function RootLayout({
   children,

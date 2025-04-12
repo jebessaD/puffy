@@ -132,7 +132,7 @@ export default function ProductCard({
                     )}
 
                     <span className="text-base md:text-xl font-medium text-gray-900 flex items-end">
-                      <span>{Math.floor(discountedPrice)}</span>
+                      $<span>{Math.floor(discountedPrice)}</span>
                       <span className="text-sm mb-px font-normal text-gray-700">
                         .{discountedPrice.toFixed(2).split(".")[1]}
                       </span>{" "}
