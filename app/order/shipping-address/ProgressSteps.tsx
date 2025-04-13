@@ -30,7 +30,7 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
           </div>
 
           {/* Step Label */}
-          <div className="mt-2 text-sm font-medium text-center">
+          <div className="mt-2 text-xs sm:text-sm font-medium text-center">
             <span className={`${index <= currentStep ? "text-black font-medium" : "text-gray-400"}`}>
               {step}
             </span>

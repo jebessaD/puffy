@@ -79,7 +79,7 @@ const CheckoutPage = () => {
   return (
     <div className="flex">
       <div className="fixed flex-col sm:flex-row bg-white border-b border-gray-100 left-0 right-0 top-0 flex items-center justify-between sm:p-4 p-2 z-20">
-        <Button variant="outline" onClick={() => window.history.back()}>
+        <Button className="" variant="outline" onClick={() => window.history.back()}>
           Back
         </Button>
         <ProgressSteps steps={steps} currentStep={2} />
@@ -133,7 +133,7 @@ const CheckoutPage = () => {
               Ship to
             </h2>
             {shippingAddress ? (
-              <div className="border-b pb-4 border-gray-100">
+              <div className="border-b text-sm md:text-base pb-4 border-gray-100">
                 <div className=" space-y-3 text-gray-700">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-gray-500" />
@@ -170,24 +170,22 @@ const CheckoutPage = () => {
                 <span>|</span> Credit Cards
               </span>
             </h2>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center mb-4">
               <FaCcVisa className="text-3xl text-neutral-700" />
               <FaCcMastercard className="text-3xl text-neutral-700" />{" "}
               <FaCcAmex className="text-3xl text-neutral-700" />{" "}
               <FaCcDiscover className="text-3xl text-neutral-700" />{" "}
-              <FaCcPaypal className="text-3xl text-neutral-700" />{" "}
+              <FaApple className="text-3xl text-neutral-700" />
+              <FaGoogle className="text-2xl text-neutral-700" />
             </div>
-            {/* <select className="w-full p-2 border rounded-md">
-              <option>Credit Card</option>
-              <option>PayPal</option>
-            </select> */}{" "}
+       
             <Button
               onClick={proceedToCheckout}
               size={"lg"}
               className="rounded-sm h-10 w-full mt-4"
               disabled={loading}
             >
-              {loading ? "Processing..." : "Proceed to Payment"}
+              {loading ? "Processing..." : "Pay Now $" + totalPrice.toFixed(2)}
             </Button>
           </div>
         </div>
