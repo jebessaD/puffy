@@ -98,7 +98,7 @@ export default function ProductCard({
         {/* Content Container with Background - Move transform to this div */}
         <div className="relative flex flex-col bg-white transform transition-transform duration-300 lg:group-hover:-translate-y-[56px]">
           {/* Product Info - Remove transform from here */}
-          <div className="p-2  md:p-4 relative md:h-48 border-t border-slate-50 lg:h-full lg:pb-4 lg:pt-4">
+          <div className="p-3  md:p-4 relative md:h-48 border-t border-slate-50 lg:h-full lg:pb-4 lg:pt-4">
             {/* Main Content */}
             <div className="space-y-2">
               <div className="flex sm:flex-col justify-between">
@@ -138,10 +138,10 @@ export default function ProductCard({
                       </span>{" "}
                     </span>
                     <div
-                      className={`flex md:hidden ${isHome ? "hidden" : ""} items-center justify-center space-x-2 p-1 text-green-600 bg-green-100 my-1 gap-2`}
+                      className={`flex md:hidden ${isHome ? "hidden" : ""} items-center space-x-1 text-green-600 my-1`}
                     >
                       <LiaShippingFastSolid />{" "}
-                      <span className="text-xs">Free Shipping</span>
+                      <span className="text-xs mt-0.5">Free Shipping</span>
                     </div>
                   </div>
                   <div
