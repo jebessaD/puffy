@@ -52,7 +52,7 @@ export default function ProductFilters({
               placeholder="Search..."
               value={filters.search || ""}
               onChange={(e) => handleChange("search", e.target.value)}
-              className="pl-12 h-12 w-full text-lg" /* Increased height, padding, and text size */
+              className="pl-12 h-12 w-full md:text-lg" /* Increased height, padding, and text size */
             />
           </div>
           <div className="flex bg items-center gap-2 w-full md:w-auto ">

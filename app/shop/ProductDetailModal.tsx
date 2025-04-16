@@ -204,12 +204,12 @@ export default function ProductDetailModal({
                   <div className="flex items-center border rounded-md">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-2 bg-gray-50 hover:bg-white py-1 text-gray-500 hover:text-gray-700 disabled:opacity-50 text-sm"
+                      className="px-4 bg-gray-50 hover:bg-white py-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 text-sm"
                       disabled={quantity <= 1}
                     >
                       -
                     </button>
-                    <span className="px-3 py-1 text-sm font-medium border-x">
+                    <span className="px-5 py-2 text-sm font-medium border-x">
                       {quantity}
                     </span>
                     <button
@@ -218,8 +218,8 @@ export default function ProductDetailModal({
                           Math.min(product.stockQuantity, quantity + 1)
                         )
                       }
-                      className="px-2 bg-gray-50 hover:bg-white py-1 text-gray-500 hover:text-gray-700 disabled:opacity-50 text-sm"
-                      disabled={quantity >= product.stockQuantity}
+                      className="px-4 bg-gray-50 hover:bg-white py-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 text-sm"
+                     
                     >
                       +
                     </button>
