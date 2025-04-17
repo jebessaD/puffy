@@ -1,6 +1,6 @@
 import useSWRMutation from "swr/mutation";
 import { fetcher, post, patch, trackingNumberUpdate } from "../lib/fetcher";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 interface EmailDetails {
   email: string;
@@ -32,8 +32,8 @@ interface UseCheckoutReturn {
   isLoading: boolean;
   successUrl: string;
   errorMessage: string;
+  mutate: () => Promise<any>;
 }
-
 
 export function useSendEmail() {
   const { trigger, isMutating, data, error } = useSWRMutation(
@@ -67,9 +67,13 @@ export function useCheckout() {
     async (url, { arg }: { arg: CheckoutDetails }) => post(url, arg)
   );
 
+  const handleCheckout = async (checkoutDetails: CheckoutDetails) => {
+    const result = await trigger(checkoutDetails);
+    return result; 
+  };
+
   return {
-    handleCheckout: (checkoutDetails: CheckoutDetails) =>
-      trigger(checkoutDetails),
+    handleCheckout,
     isLoading: isMutating,
     successUrl: data?.url || "",
     errorMessage: error?.message || "",

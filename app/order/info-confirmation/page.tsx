@@ -54,18 +54,21 @@ const CheckoutPage = () => {
   }, 0);
 
   const [loading, setLoading] = useState(false);
-
-  const { handleCheckout, isLoading, successUrl, errorMessage } = useCheckout();
+  const { handleCheckout, isLoading, errorMessage } = useCheckout();
 
   const proceedToCheckout = async () => {
     try {
-      console.log("Proceeding to checkout with products:", checkoutProducts);
-      await handleCheckout({ checkoutProducts, shippingAddress, totalPrice });
-      if (successUrl) {
+      const result = await handleCheckout({
+        checkoutProducts,
+        shippingAddress,
+        totalPrice,
+      });
+
+      if (result?.url) {
         if (fromCart) {
           clearCart();
         }
-        window.location.href = successUrl;
+        window.location.href = result.url;
       }
     } catch (error) {
       console.error("Checkout error", errorMessage);
@@ -79,7 +82,11 @@ const CheckoutPage = () => {
   return (
     <div className="flex">
       <div className="fixed flex-col sm:flex-row bg-white border-b border-gray-100 left-0 right-0 top-0 flex items-center justify-between sm:p-4 p-2 z-20">
-        <Button className="" variant="outline" onClick={() => window.history.back()}>
+        <Button
+          className=""
+          variant="outline"
+          onClick={() => window.history.back()}
+        >
           Back
         </Button>
         <ProgressSteps steps={steps} currentStep={2} />
@@ -178,7 +185,7 @@ const CheckoutPage = () => {
               <FaApple className="text-3xl text-neutral-700" />
               <FaGoogle className="text-2xl text-neutral-700" />
             </div>
-       
+
             <Button
               onClick={proceedToCheckout}
               size={"lg"}
