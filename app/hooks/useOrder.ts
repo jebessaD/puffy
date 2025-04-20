@@ -24,7 +24,7 @@ interface UseStatsReturn {
 interface CheckoutDetails {
   checkoutProducts: any[];
   shippingAddress: any;
-  totalPrice: number;
+  fromCart: boolean;
 }
 
 interface UseCheckoutReturn {

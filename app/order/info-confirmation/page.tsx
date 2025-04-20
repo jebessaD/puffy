@@ -32,7 +32,7 @@ const CheckoutPage = () => {
   const { checkoutProducts, shippingAddress, clearCart } = useCartStore();
   const searchParams = useSearchParams();
   const steps = ["Shipping Address", "Checkout"];
-  const fromCart = searchParams.get("fromCart");
+  const fromCart = !!searchParams.get("fromCart");
 
   const calculateDiscountedPrice = (
     price: number,
@@ -61,13 +61,10 @@ const CheckoutPage = () => {
       const result = await handleCheckout({
         checkoutProducts,
         shippingAddress,
-        totalPrice,
+        fromCart
       });
 
       if (result?.url) {
-        if (fromCart) {
-          clearCart();
-        }
         window.location.href = result.url;
       }
     } catch (error) {
@@ -76,7 +73,7 @@ const CheckoutPage = () => {
   };
 
   if (!checkoutProducts || checkoutProducts.length === 0) {
-    return <p className="text-red-500 font-semibold">No products in cart.</p>;
+    return <p className="text-red-500 p-4 font-semibold">No products in cart.</p>;
   }
 
   return (

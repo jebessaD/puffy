@@ -5,10 +5,12 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useSendEmail } from "@/app/hooks/useOrder";
 import Loading from "@/app/components/ui/loading";
+import { useCartStore } from "@/app/store/useCartStore";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
+  const {clearCart} = useCartStore()
 
   const [customerEmail, setCustomerEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,6 +32,10 @@ function SuccessContent() {
       try {
         const res = await fetch(`/api/stripe/session?session_id=${sessionId}`);
         const data: SessionData = await res.json();
+        const fromCart = data.metadata?.fromcart === "true";
+        if (fromCart) {
+          clearCart();
+        }
 
         if (res.ok) {
           setCustomerEmail(data.customer_details?.email || "No email found");
@@ -77,6 +83,10 @@ function SuccessContent() {
     amount_total?: number;
     line_items?: LineItem[];
     error?: string;
+    metadata?: {
+      orderId?: string;
+      fromcart?: string;
+    };
   }
 
   const generateEmailHTML = (data: SessionData): string => {

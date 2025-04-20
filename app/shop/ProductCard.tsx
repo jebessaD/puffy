@@ -83,7 +83,7 @@ export default function ProductCard({
       >
         {/* Image Container */}
         <div
-          className={`relative bg-white   ${isHome ? "h-60" : "h-32"} lg:h-auto   lg:aspect-square overflow-hidden`}
+          className={`relative bg-white   ${isHome ? "h-72" : "h-44"} lg:h-auto   lg:aspect-square overflow-hidden`}
         >
           <Image
             src={imageUrl}

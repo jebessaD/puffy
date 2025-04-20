@@ -31,6 +31,7 @@ export async function GET(req: Request) {
       id: session.id,
       customer_details: session.customer_details,
       amount_total: session.amount_total,
+      metadata: session.metadata,
       line_items: lineItems,
     };
 

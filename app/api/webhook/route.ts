@@ -7,6 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: Request) {
   const sig = req.headers.get("stripe-signature")!;
   const body = await req.text();
+  let fromCart = false
 
   try {
     const event = stripe.webhooks.constructEvent(
@@ -17,6 +18,7 @@ export async function POST(req: Request) {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
+      fromCart = session.metadata?.fromCart === "true" || false
       
       // 1. Validate metadata (orderId is the ONLY required field)
       if (!session.metadata?.orderId) {
@@ -41,10 +43,19 @@ export async function POST(req: Request) {
         },
       });
 
+
       console.log(`✅ Order ${session.metadata.orderId} marked as PAID`);
+     
     }
 
-    return NextResponse.json({ received: true }, { status: 200 });
+    return NextResponse.json(
+      {
+        received: true,
+        fromcart: fromCart,
+      },
+      { status: 200 }
+    );
+    
   } catch (error) {
     console.error("❌ Webhook Error:", error);
     return NextResponse.json(

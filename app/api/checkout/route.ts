@@ -4,9 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const { checkoutProducts, shippingAddress } = await req.json();
+    const { checkoutProducts, shippingAddress, fromCart } = await req.json();
 
-    
     if (!checkoutProducts?.length || !shippingAddress?.email) {
       return NextResponse.json(
         { error: "Products and email are required" },
@@ -48,7 +47,7 @@ export async function POST(req: Request) {
             color: product?.selectedColor,
             size: product?.selectedSize,
             quantity: product.quantity,
-            price: product.price * (100 - product.discount || 0) / 100, // Store discounted price
+            price: product.price * (100 - product.discount || 0) / 100,
           })),
         },
       },
@@ -63,7 +62,7 @@ export async function POST(req: Request) {
         const unitAmount = Math.round(
           product.price * (100 - product.discount || 0) / 100 * 100
         ); // Convert discounted price to cents
-        
+
         return {
           price_data: {
             currency: "usd",
@@ -79,6 +78,7 @@ export async function POST(req: Request) {
       customer_email: shippingAddress.email,
       metadata: {
         orderId: order.id.toString(),
+        fromcart: fromCart ? "true" : "false",
       },
     });
 
